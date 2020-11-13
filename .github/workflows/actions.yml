@@ -9,11 +9,11 @@ on:
 
 env:
   android:
-    api: 26
-    arch: x86
-  folder: app
-  variant: debug
-  gradleTask: assembleDebug
+    api: '26'
+    arch: 'x86'
+  folder: 'app'
+  variant: 'debug'
+  gradleTask: 'assembleDebug'
 
 jobs:
   test:
