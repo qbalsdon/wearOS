@@ -26,5 +26,5 @@ Feel free to fork this repository and create your own faces.
 [WALLPAPER]: https://developer.android.com/reference/android/service/wallpaper/WallpaperService
 [HILT]: https://developer.android.com/training/dependency-injection/hilt-android
 [HILTEXAMPLE]: https://github.com/android/architecture-samples/tree/dev-hilt
-[DIFOLDER]: ./app/source/main/java/com/balsdon/watchapplication/di/WatchFaceModule.kt
+[DIFOLDER]: ./app/src/main/java/com/balsdon/watchapplication/di/WatchFaceModule.kt
 [PULL1]: https://github.com/qbalsdon/wearOS/pull/1
