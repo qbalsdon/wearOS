@@ -1,6 +1,6 @@
-# Android Wear OS with Test Harness
+# Android Wear OS watch face with Test Harness
 
-An Android Wear OS template with testing harness
+An Android Wear OS template re-imagined with testing harness. The harness does what the emulator seems to lack
 
 The goal is to demonstrate how to create
 - a testing harness for Wear OS watch faces
@@ -21,7 +21,7 @@ The app uses [Hilt][HILT] for injecting the dependency - this enables developers
 Feel free to fork this repository and create your own faces.
 
 ### Changes
-1. Changes from template to basic architecture solution
+1. [Changes from template to basic architecture solution][PULL1]
 
 [WALLPAPER]: https://developer.android.com/reference/android/service/wallpaper/WallpaperService
 [HILT]: https://developer.android.com/training/dependency-injection/hilt-android
