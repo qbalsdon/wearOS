@@ -1,4 +1,4 @@
-package com.balsdon.watchapplication.watchfacerenderer
+package com.balsdon.watchfacerenderer
 
 data class WatchScreenSettings(var isAmbientMode: Boolean = false,
                                var isMuteMode: Boolean = false,

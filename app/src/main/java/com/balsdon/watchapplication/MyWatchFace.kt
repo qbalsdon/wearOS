@@ -14,7 +14,7 @@ import android.support.wearable.watchface.WatchFaceService
 import android.support.wearable.watchface.WatchFaceStyle
 import android.view.SurfaceHolder
 import android.widget.Toast
-import com.balsdon.watchapplication.watchfacerenderer.WatchFaceRenderer
+import com.balsdon.watchfacerenderer.WatchFaceRenderer
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
 import java.util.*
@@ -47,7 +47,7 @@ private const val MSG_UPDATE_TIME = 0
 @AndroidEntryPoint
 class MyWatchFace : CanvasWatchFaceService() {
     @Inject
-    lateinit var watchFaceRenderer: WatchFaceRenderer
+    lateinit var watchFaceRenderer: com.balsdon.watchfacerenderer.WatchFaceRenderer
 
     override fun onCreateEngine(): Engine {
         return Engine(watchFaceRenderer)
@@ -66,7 +66,7 @@ class MyWatchFace : CanvasWatchFaceService() {
         }
     }
 
-    inner class Engine(private val faceRenderer: WatchFaceRenderer) : CanvasWatchFaceService.Engine() {
+    inner class Engine(private val faceRenderer: com.balsdon.watchfacerenderer.WatchFaceRenderer) : CanvasWatchFaceService.Engine() {
         private var hasRegisteredTimeZoneReceiver = false
 
         /* Handler to update the time once a second in interactive mode. */

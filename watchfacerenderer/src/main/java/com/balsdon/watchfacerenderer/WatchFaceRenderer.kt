@@ -1,4 +1,4 @@
-package com.balsdon.watchapplication.watchfacerenderer
+package com.balsdon.watchfacerenderer
 
 import android.content.res.Resources
 import android.graphics.Canvas
