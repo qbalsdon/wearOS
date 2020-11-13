@@ -1,9 +1,10 @@
-package com.balsdon.watchapplication
+package com.balsdon.watchfacerenderer.example
 
 import android.content.res.Resources
 import android.graphics.*
 import androidx.palette.graphics.Palette
-import com.balsdon.watchapplication.watchfacerenderer.WatchFaceRenderer
+import com.balsdon.watchfacerenderer.R
+import com.balsdon.watchfacerenderer.WatchFaceRenderer
 import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin

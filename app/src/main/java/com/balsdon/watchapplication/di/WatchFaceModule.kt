@@ -1,8 +1,8 @@
 package com.balsdon.watchapplication.di
 
 import android.content.Context
-import com.balsdon.watchapplication.ExampleWatchRenderer
-import com.balsdon.watchapplication.watchfacerenderer.WatchFaceRenderer
+import com.balsdon.watchfacerenderer.example.ExampleWatchRenderer
+import com.balsdon.watchfacerenderer.WatchFaceRenderer
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

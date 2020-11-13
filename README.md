@@ -22,9 +22,11 @@ Feel free to fork this repository and create your own faces.
 
 ### Changes
 1. [Changes from template to basic architecture solution][PULL1]
+1. [Move WatchFaceRenderer and example into separate module][PULL2]
 
 [WALLPAPER]: https://developer.android.com/reference/android/service/wallpaper/WallpaperService
 [HILT]: https://developer.android.com/training/dependency-injection/hilt-android
 [HILTEXAMPLE]: https://github.com/android/architecture-samples/tree/dev-hilt
 [DIFOLDER]: ./app/src/main/java/com/balsdon/watchapplication/di/WatchFaceModule.kt
 [PULL1]: https://github.com/qbalsdon/wearOS/pull/1
+[PULL2]: https://github.com/qbalsdon/wearOS/pull/2
