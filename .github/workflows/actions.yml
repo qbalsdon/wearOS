@@ -7,15 +7,15 @@ on:
     branches:
       - main
 
-jobs:
-  env:
-    android:
-      api: 26
-      arch: x86
-    folder: app
-    variant: debug
-    gradleTask: assembleDebug
+env:
+  android:
+    api: 26
+    arch: x86
+  folder: app
+  variant: debug
+  gradleTask: assembleDebug
 
+jobs:
   test:
     name: Run Test Suite [Unit, Instrumented]
     runs-on: macos-latest
