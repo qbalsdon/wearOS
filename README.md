@@ -1,4 +1,4 @@
-# wearOS
+# Android Wear OS with Test Harness
 
 An Android Wear OS template with testing harness
 
