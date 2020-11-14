@@ -9,11 +9,6 @@ on:
 
 jobs:
   test:
-    env:
-      emulator:
-        api: 29
-        arch: 'x86'
-
     name: Run Test Suite [Unit, Instrumented]
     runs-on: macos-latest
     steps:
@@ -28,20 +23,16 @@ jobs:
       - name: Execute Unit Tests (gradlew test)
         run: bash ./gradlew test --stacktrace
 
-      - name: Execute Instrumentation Tests (gradlew connectedCheck - api $emulator.api)
+      - name: Execute Instrumentation Tests (gradlew connectedCheck - api 29)
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: $emulator.api
+          api-level: 29
           target: default
-          arch: $emulator.arch
+          arch: 'x86'
           profile: Nexus 6
           script: ./gradlew connectedCheck --stacktrace
 
   generateArtifacts:
-    env:
-      variant: 'debug'
-      gradleTask: 'assembleDebug'
-
     name: Generate Debug APK artifacts
     runs-on: ubuntu-latest
 
@@ -52,10 +43,10 @@ jobs:
         with:
           java-version: 1.8
       - name: Build $variant APK
-        run: bash ./gradlew $gradleTask --stacktrace
+        run: bash ./gradlew assembleDebug --stacktrace
 
       - name: Upload $variant APK
         uses: actions/upload-artifact@v1
         with:
-          name: app-$variant-${{ github.run_number }}-$variant
-          path: app/build/outputs/apk/$variant/app-$variant.apk
+          name: app-debug-${{ github.run_number }}
+          path: app/build/outputs/apk/debug/app-debug.apk
