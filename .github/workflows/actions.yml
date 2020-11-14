@@ -7,18 +7,18 @@ on:
     branches:
       - main
 
-env:
-  android:
-    api: 26
-    arch: 'x86'
-  variant: 'debug'
-  gradleTask: 'assembleDebug'
-
 jobs:
   test:
     name: Run Test Suite [Unit, Instrumented]
     runs-on: macos-latest
     steps:
+      env:
+        android:
+          api: 26
+          arch: 'x86'
+        variant: 'debug'
+        gradleTask: 'assembleDebug'
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -28,14 +28,14 @@ jobs:
           java-version: 1.8
 
       - name: Execute Unit Tests (gradlew test)
-        run: cd ${{ folder }} && bash ./gradlew test --stacktrace
+        run: bash ./gradlew test --stacktrace
 
-      - name: Execute Instrumentation Tests (gradlew connectedCheck - api ${{ android.api }})
+      - name: Execute Instrumentation Tests (gradlew connectedCheck - api $android.api)
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ android.api }}
+          api-level: $android.api
           target: default
-          arch: ${{ android.arch }}
+          arch: $android.arch
           profile: Nexus 6
           script: ./gradlew connectedCheck --stacktrace
 
@@ -49,14 +49,11 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-     #- name: Build ${{ flavour }} ${{ variant }} APK
-      - name: Build ${{ variant }} APK
-        run: bash ./gradlew ${{ gradleTask }} --stacktrace
+      - name: Build $variant APK
+        run: bash ./gradlew $gradleTask --stacktrace
 
-     #- name: Upload ${{ flavour }} ${{ variant }} APK
-      - name: Upload ${{ variant }} APK
+      - name: Upload $variant APK
         uses: actions/upload-artifact@v1
         with:
-          name: app-${{ variant }}-${{ github.run_number }}-${{ variant }}
-          path: app/build/outputs/apk/${{ build_type }}/app-${{ variant }}.apk
-          #path: app/build/outputs/apk/${{ flavour }}/debug/app-${{ flavour }}-${{ variant }}.apk
+          name: app-$variant-${{ github.run_number }}-$variant
+          path: app/build/outputs/apk/$build_type/app-$variant.apk
