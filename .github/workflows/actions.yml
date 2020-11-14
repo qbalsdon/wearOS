@@ -9,9 +9,8 @@ on:
 
 env:
   android:
-    api: '26'
+    api: 26
     arch: 'x86'
-  folder: 'app'
   variant: 'debug'
   gradleTask: 'assembleDebug'
 
@@ -38,7 +37,7 @@ jobs:
           target: default
           arch: ${{ android.arch }}
           profile: Nexus 6
-          script: cd ${{ folder }} && ./gradlew connectedCheck --stacktrace
+          script: ./gradlew connectedCheck --stacktrace
 
   generateArtifacts:
     name: Generate Debug APK artifacts
@@ -52,7 +51,7 @@ jobs:
           java-version: 1.8
      #- name: Build ${{ flavour }} ${{ variant }} APK
       - name: Build ${{ variant }} APK
-        run: cd ${{ folder }} && bash ./gradlew ${{ gradleTask }} --stacktrace
+        run: bash ./gradlew ${{ gradleTask }} --stacktrace
 
      #- name: Upload ${{ flavour }} ${{ variant }} APK
       - name: Upload ${{ variant }} APK
