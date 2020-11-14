@@ -23,6 +23,10 @@ jobs:
       - name: Execute Unit Tests (gradlew test)
         run: bash ./gradlew test --stacktrace
 
+      - name: Android Test Report
+          uses: asadmansr/android-test-report-action@v1.2.0
+          if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
+
       - name: Execute Instrumentation Tests [gradlew connectedCheck - api 29 (x86)]
         uses: reactivecircus/android-emulator-runner@v2
         with:
