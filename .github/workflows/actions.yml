@@ -8,12 +8,13 @@ on:
       - main
 
 jobs:
-  env:
-    android:
-      api: 29
-      arch: 'x86'
-    variant: 'debug'
-    gradleTask: 'assembleDebug'
+  build:
+    env:
+      android:
+        api: 29
+        arch: 'x86'
+      variant: 'debug'
+      gradleTask: 'assembleDebug'
 
   test:
     name: Run Test Suite [Unit, Instrumented]
