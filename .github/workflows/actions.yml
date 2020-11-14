@@ -10,7 +10,7 @@ on:
 jobs:
   test:
     name: Run Test Suite [Unit, Instrumented]
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -20,15 +20,10 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Execute Unit Tests (gradlew test)
+      - name: Execute Unit Tests [./gradlew testDebugUnitTest --stacktrace]
         run: ./gradlew testDebugUnitTest --stacktrace
-        continue-on-error: true # IMPORTANT: allow pipeline to continue to Android Test Report step
 
-      - name: Android Test Report
-        uses: asadmansr/android-test-report-action@v1.2.0
-        if: ${{ always() }} # IMPORTANT: run Android Test Report regardless
-
-      - name: Execute Instrumentation Tests [gradlew connectedCheck - api 29 (x86)]
+      - name: Execute Instrumentation Tests [./gradlew connectedCheck --stacktrace (api 29, x86)]
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
@@ -47,8 +42,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Build Debug APK
-        run: bash ./gradlew assembleDebug --stacktrace
+      - name: Build Debug APK [./gradlew assembleDebug --stacktrace]
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v1
