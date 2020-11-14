@@ -8,17 +8,17 @@ on:
       - main
 
 jobs:
+  env:
+    android:
+      api: 29
+      arch: 'x86'
+    variant: 'debug'
+    gradleTask: 'assembleDebug'
+
   test:
     name: Run Test Suite [Unit, Instrumented]
     runs-on: macos-latest
     steps:
-      env:
-        android:
-          api: 26
-          arch: 'x86'
-        variant: 'debug'
-        gradleTask: 'assembleDebug'
-
       - name: Checkout
         uses: actions/checkout@v2
 
