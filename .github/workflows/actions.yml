@@ -23,7 +23,7 @@ jobs:
       - name: Execute Unit Tests (gradlew test)
         run: bash ./gradlew test --stacktrace
 
-      - name: Execute Instrumentation Tests (gradlew connectedCheck - api 29)
+      - name: Execute Instrumentation Tests [gradlew connectedCheck - api 29 (x86)]
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
@@ -42,10 +42,10 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - name: Build $variant APK
+      - name: Build Debug APK
         run: bash ./gradlew assembleDebug --stacktrace
 
-      - name: Upload $variant APK
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v1
         with:
           name: app-debug-${{ github.run_number }}
