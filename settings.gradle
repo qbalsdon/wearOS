@@ -1,3 +1,4 @@
+include ':harness'
 include ':watchfacerenderer'
 include ':app'
 rootProject.name = "Watch Application"

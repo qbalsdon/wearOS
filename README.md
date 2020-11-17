@@ -18,6 +18,8 @@ The reason for the harness is that the emulator is not really "fit for purpose" 
 
 The app uses [Hilt][HILT] for injecting the dependency - this enables developers to create build flavours with different watch faces. This is done in the [di][DIFOLDER] folder. Please review the [Hilt example code][HILTEXAMPLE]
 
+The harness app also uses two different layout modes, one for landscape tablets that is quite basic, and a phone view that uses a rudimentary implementation of [side sheets][SIDESHEET]. This was really great learning for [motion layout][MOTIONLAYOUT] as well.
+
 Feel free to fork this repository and create your own faces.
 
 ### Changes
@@ -30,3 +32,5 @@ Feel free to fork this repository and create your own faces.
 [DIFOLDER]: ./app/src/main/java/com/balsdon/watchapplication/di/WatchFaceModule.kt
 [PULL1]: https://github.com/qbalsdon/wearOS/pull/1
 [PULL2]: https://github.com/qbalsdon/wearOS/pull/2
+[SIDESHEET]: https://material.io/components/sheets-side#specs
+[MOTIONLAYOUT]: https://developer.android.com/training/constraint-layout/motionlayout
