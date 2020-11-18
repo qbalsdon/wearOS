@@ -1,4 +1,4 @@
-package com.balsdon.harness.ui.control
+package com.balsdon.harness.ui.fragment.control
 
 import androidx.lifecycle.ViewModel
 

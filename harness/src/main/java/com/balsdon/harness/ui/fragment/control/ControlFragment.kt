@@ -1,13 +1,12 @@
-package com.balsdon.harness.ui.control
+package com.balsdon.harness.ui.fragment.control
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.balsdon.harness.R
-import com.balsdon.harness.ui.watch.WatchViewModel
 
 class ControlFragment : Fragment() {
 
@@ -21,7 +20,7 @@ class ControlFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.control_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_control, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

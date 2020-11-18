@@ -1,4 +1,4 @@
-package com.balsdon.harness.ui.watch
+package com.balsdon.harness.ui.fragment.watch
 
 import androidx.lifecycle.ViewModel
 

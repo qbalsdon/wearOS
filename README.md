@@ -16,7 +16,7 @@ The reason for the harness is that the emulator is not really "fit for purpose" 
   - Has an inner class `Engine`, which handles both user control and drawing
   - Cannot be controlled in the emulator, and are difficult to engage on a real device
 
-The app uses [Hilt][HILT] for injecting the dependency - this enables developers to create build flavours with different watch faces. This is done in the [di][DIFOLDER] folder. Please review the [Hilt example code][HILTEXAMPLE]
+The app uses [Hilt][HILT] for injecting the dependency - this enables developers to create build flavours with different watch faces. This is done in the [di][DIFOLDER] folder. Please review the [Hilt example code][HILTEXAMPLE] or go to the [Dagger site][HILT2] to read more
 
 The harness app also uses two different layout modes, one for landscape tablets that is quite basic, and a phone view that uses a rudimentary implementation of [side sheets][SIDESHEET]. This was really great learning for [motion layout][MOTIONLAYOUT] as well.
 
@@ -26,6 +26,27 @@ Feel free to fork this repository and create your own faces.
 1. [Changes from template to basic architecture solution][PULL1]
 1. [Move WatchFaceRenderer and example into separate module][PULL2]
 
+### Tasks
+|TYPE|EPIC|TASK|DESCRIPTION|STATUS|
+|:--:|:---|:---|:----------|-----:|
+| TASK | Watch Face App | Create default app |  | :ballot_box_with_check: |
+| TASK | Watch Face App | Extract interface | Create an interface separate from Engine | :ballot_box_with_check: |
+| TASK | Watch Face App | Scale face | Ensure tick marks scale with width / height | :ballot_box_with_check: |
+| BUG | Watch Face App | Scale face | Ensure images scale with width / height | :ballot_box_with_check: |
+| TASK | Renderer Module | Create dependency module | Empty module creation | :ballot_box_with_check: |
+| TASK | Renderer Module | Create dependency module | Extract image renderer interface | :ballot_box_with_check: |
+| TASK | Renderer Module | Create dependency module | Extract image renderer example | :ballot_box_with_check: |
+| TASK | Renderer Module | Create dependency module | Inject renderer with hilt | :ballot_box_with_check: |
+| TASK | Harness Module | Create harness module | Empty module creation | :ballot_box_with_check: |
+| TASK | Harness Module | Create harness module | Create screens for tablet and phone | :ballot_box_with_check: |
+| TASK | Harness Module | Create harness module | Create watch view | :ballot_box_with_check: |
+| TASK | Harness Module | Create harness module | Create views for options | :ballot_box_with_check: |
+| TASK | Harness Module | Create harness module | Inject dependency from renderer module | :ballot_box_with_check: |
+| TASK | Harness Module | Harness: Wire up ViewModel | Display options  | :construction: |
+| TASK | Harness Module | Harness: Wire up ViewModel | Time options  | :pushpin: |
+| TASK | Harness Module | Harness: Wire up ViewModel | Support Square and Round mode  | :pushpin: |
+| TASK | Harness Module | Harness: Wire up ViewModel | Support 24-Hour mode  | :pushpin: |
+
 [WALLPAPER]: https://developer.android.com/reference/android/service/wallpaper/WallpaperService
 [HILT]: https://developer.android.com/training/dependency-injection/hilt-android
 [HILTEXAMPLE]: https://github.com/android/architecture-samples/tree/dev-hilt
@@ -34,3 +55,4 @@ Feel free to fork this repository and create your own faces.
 [PULL2]: https://github.com/qbalsdon/wearOS/pull/2
 [SIDESHEET]: https://material.io/components/sheets-side#specs
 [MOTIONLAYOUT]: https://developer.android.com/training/constraint-layout/motionlayout
+[HILT2]: https://dagger.dev/hilt/

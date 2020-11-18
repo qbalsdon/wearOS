@@ -47,7 +47,7 @@ private const val MSG_UPDATE_TIME = 0
 @AndroidEntryPoint
 class MyWatchFace : CanvasWatchFaceService() {
     @Inject
-    lateinit var watchFaceRenderer: com.balsdon.watchfacerenderer.WatchFaceRenderer
+    lateinit var watchFaceRenderer: WatchFaceRenderer
 
     override fun onCreateEngine(): Engine {
         return Engine(watchFaceRenderer)
@@ -141,7 +141,6 @@ class MyWatchFace : CanvasWatchFaceService() {
              */
             faceRenderer.apply {
                 surfaceChanged(width, height)
-                scaleImages(width)
             }
         }
 

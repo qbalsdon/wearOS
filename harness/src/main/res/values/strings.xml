@@ -3,4 +3,19 @@
     <string name="layout_long">LONG_LAYOUT</string>
     <string name="layout_condensed">CONDENSED LAYOUT</string>
     <string name="settings_title">Settings</string>
+    <string name="settings_display">Display</string>
+    <string name="settings_ambient_mode">Ambient mode</string>
+    <string name="settings_mute_dimmed">Mute (Dimmed)</string>
+    <string name="settings_low_bit_ambient">Low bit ambient</string>
+    <string name="settings_burn_in_protecttion">Burn in protecttion</string>
+    <string name="settings_time_heading_label">Time</string>
+    <string name="settings_animated_time">Animated time</string>
+    <string name="settings_24_hour_mode">24 Hour Mode</string>
+    <string name="settings_speed">Speed</string>
+    <string name="settings_set_time">Set time</string>
+    <string name="settings_screen_size">Screen size</string>
+    <string name="time_separator">:</string>
+    <string name="settings_face_type_round">Round</string>
+    <string name="settings_face_type_square">Square</string>
+    <string name="settings_face_type">Face shape</string>
 </resources>

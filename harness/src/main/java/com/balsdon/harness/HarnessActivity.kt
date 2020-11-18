@@ -1,14 +1,15 @@
 package com.balsdon.harness
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.animation.AnimationUtils
-import com.balsdon.harness.ui.control.ControlFragment
-import com.balsdon.harness.ui.watch.WatchFragment
+import androidx.appcompat.app.AppCompatActivity
+import com.balsdon.harness.ui.fragment.control.ControlFragment
+import com.balsdon.harness.ui.fragment.watch.WatchFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.harness_activity.*
 
+@AndroidEntryPoint
 class HarnessActivity : AppCompatActivity() {
 
     private val isCondensed: Boolean by lazy {

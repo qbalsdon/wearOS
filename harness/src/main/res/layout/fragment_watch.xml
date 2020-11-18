@@ -5,16 +5,18 @@
     android:id="@+id/watch"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.watch.WatchFragment">
+    tools:context=".ui.fragment.control.watch.WatchFragment">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Watch Fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <com.balsdon.harness.ui.view.WatchFaceView
+        android:id="@+id/watchFace"
+        android:layout_width="360dp"
+        android:layout_height="360dp"
+
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

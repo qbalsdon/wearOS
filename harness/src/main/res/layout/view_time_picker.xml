@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/hourUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/arrow_up_float"
+        app:layout_constraintStart_toStartOf="@id/hourLabel"
+        app:layout_constraintEnd_toEndOf="@id/hourLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <ImageView
+        android:id="@+id/minuteUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/arrow_up_float"
+        app:layout_constraintStart_toStartOf="@id/minuteLabel"
+        app:layout_constraintEnd_toEndOf="@id/minuteLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <ImageView
+        android:id="@+id/secondUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/arrow_up_float"
+        app:layout_constraintStart_toStartOf="@id/secondLabel"
+        app:layout_constraintEnd_toEndOf="@id/secondLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/hourLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        android:textSize="30sp"
+
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/hourMinuteSeparator"
+
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hourUpButton"
+        tools:text="HH" />
+
+    <TextView
+        android:id="@+id/hourMinuteSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        tools:text=":"
+
+        android:textSize="30sp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toStartOf="@+id/minuteLabel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/hourLabel"
+        app:layout_constraintTop_toTopOf="@id/hourLabel" />
+
+    <TextView
+        android:id="@+id/minuteLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        android:textSize="30sp"
+
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/minuteSecondSeparator"
+
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/hourMinuteSeparator"
+        app:layout_constraintTop_toTopOf="@id/hourLabel"
+        tools:text="MM" />
+
+    <TextView
+        android:id="@+id/minuteSecondSeparator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        tools:text=":"
+
+        android:textSize="30sp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toStartOf="@+id/secondLabel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/minuteLabel"
+        app:layout_constraintTop_toTopOf="@id/hourLabel" />
+
+    <TextView
+        android:id="@+id/secondLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|end"
+        android:textSize="30sp"
+
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/minuteSecondSeparator"
+        app:layout_constraintTop_toTopOf="@id/hourLabel"
+        tools:text="SS" />
+
+    <ImageView
+        android:id="@+id/hourDownButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/arrow_down_float"
+        app:layout_constraintStart_toStartOf="@id/hourLabel"
+        app:layout_constraintEnd_toEndOf="@id/hourLabel"
+        app:layout_constraintTop_toBottomOf="@id/hourLabel"
+        />
+    <ImageView
+        android:id="@+id/minuteDownButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/arrow_down_float"
+        app:layout_constraintStart_toStartOf="@id/minuteLabel"
+        app:layout_constraintEnd_toEndOf="@id/minuteLabel"
+        app:layout_constraintTop_toBottomOf="@id/hourLabel"
+        />
+    <ImageView
+        android:id="@+id/secondDownButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/arrow_down_float"
+        app:layout_constraintStart_toStartOf="@id/secondLabel"
+        app:layout_constraintEnd_toEndOf="@id/secondLabel"
+        app:layout_constraintTop_toBottomOf="@id/hourLabel"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

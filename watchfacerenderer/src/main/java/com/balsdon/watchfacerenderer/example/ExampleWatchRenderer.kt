@@ -179,9 +179,10 @@ class ExampleWatchRenderer(resources: Resources? = null) : WatchFaceRenderer(res
         mShadowRadius = width * SHADOW_RADIUS
         mCenterCircleRadius = width * CENTER_GAP_AND_CIRCLE_RADIUS
         updateShadowLayers()
+        scaleImages(width)
     }
 
-    override fun scaleImages(width: Int) {
+    private fun scaleImages(width: Int) {
         /* Scale loaded background image (more efficient) if surface dimensions change. */
         val scale = width.toFloat() / mBackgroundBitmap.width.toFloat()
 

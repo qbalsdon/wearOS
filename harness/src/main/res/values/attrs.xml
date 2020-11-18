@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TimePickerView">
+        <attr name="separator" format="string" />
+        <attr name="hour" format="integer" />
+        <attr name="minute" format="integer" />
+        <attr name="second" format="integer" />
+        <attr name="time_mode" format="enum">
+            <enum name="twelve_hour" value="0"/>
+            <enum name="twenty_four_hour" value="1"/>
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="PreloadedSpinner">
+        <attr name="items" format="reference"/>
+    </declare-styleable>
+</resources>
