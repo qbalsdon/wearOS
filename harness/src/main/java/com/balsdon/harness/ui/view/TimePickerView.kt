@@ -7,14 +7,15 @@ import com.balsdon.harness.R
 import kotlinx.android.synthetic.main.view_time_picker.view.*
 import java.util.*
 
-interface TimeChangeNotifier {
-    fun onTimeChanged()
-}
-
-class TimePickerView(
+class TimePickerView (
     context: Context,
     attrs: AttributeSet
 ) : ConstraintLayout(context, attrs) {
+
+    interface TimeChangeNotifier {
+        fun onTimeChanged()
+    }
+
     companion object {
         //const val DEFAULT_MODE //TODO: 24 / 12 hour mode
         const val DEFAULT_SEPARATOR = "-"
@@ -22,7 +23,7 @@ class TimePickerView(
     }
 
     private var separator = DEFAULT_SEPARATOR
-        set(value: String) {
+        set(value) {
             field = value
             updateLabels()
         }
@@ -31,8 +32,8 @@ class TimePickerView(
 
     var time = System.currentTimeMillis()
         set(value) {
+            if (field == value) return
             field = value
-            timeChangeNotifier?.onTimeChanged()
             updateLabels()
         }
 
@@ -48,7 +49,7 @@ class TimePickerView(
 
             try {
                 separator = getString(R.styleable.TimePickerView_separator) ?: DEFAULT_SEPARATOR
-                //TODO: HOUR / MINUTE / SECOND
+                //TODO: HOUR / MINUTE / SECOND attributes
 
             } finally {
                 recycle()
@@ -58,26 +59,32 @@ class TimePickerView(
 
         hourUpButton.setOnClickListener {
             time = time.addHour(DEFAULT_INCREMENT)
+            timeChangeNotifier?.onTimeChanged()
         }
 
         hourDownButton.setOnClickListener {
             time = time.addHour(DEFAULT_INCREMENT * -1)
+            timeChangeNotifier?.onTimeChanged()
         }
 
         minuteUpButton.setOnClickListener {
             time = time.addMinute(DEFAULT_INCREMENT)
+            timeChangeNotifier?.onTimeChanged()
         }
 
         minuteDownButton.setOnClickListener {
             time = time.addMinute(DEFAULT_INCREMENT * -1)
+            timeChangeNotifier?.onTimeChanged()
         }
 
         secondUpButton.setOnClickListener {
             time = time.addSecond(DEFAULT_INCREMENT)
+            timeChangeNotifier?.onTimeChanged()
         }
 
         secondDownButton.setOnClickListener {
             time = time.addSecond(DEFAULT_INCREMENT * -1)
+            timeChangeNotifier?.onTimeChanged()
         }
     }
 

@@ -42,10 +42,12 @@ Feel free to fork this repository and create your own faces.
 | TASK | Harness Module | Create harness module | Create watch view | :ballot_box_with_check: |
 | TASK | Harness Module | Create harness module | Create views for options | :ballot_box_with_check: |
 | TASK | Harness Module | Create harness module | Inject dependency from renderer module | :ballot_box_with_check: |
-| TASK | Harness Module | Harness: Wire up ViewModel | Display options  | :construction: |
-| TASK | Harness Module | Harness: Wire up ViewModel | Time options  | :pushpin: |
+| TASK | Harness Module | Harness: Wire up ViewModel | Display options  | :ballot_box_with_check: |
+| TASK | Harness Module | Harness: Wire up ViewModel | Time options  | :ballot_box_with_check: |
+| TASK | Harness Module | Harness: Wire up ViewModel | Support size changes  | :ballot_box_with_check: |
 | TASK | Harness Module | Harness: Wire up ViewModel | Support Square and Round mode  | :pushpin: |
 | TASK | Harness Module | Harness: Wire up ViewModel | Support 24-Hour mode  | :pushpin: |
+| TASK | Harness Module | Harness Activity | Inject the coroutineTimerTicker | :pushpin: |
 
 [WALLPAPER]: https://developer.android.com/reference/android/service/wallpaper/WallpaperService
 [HILT]: https://developer.android.com/training/dependency-injection/hilt-android

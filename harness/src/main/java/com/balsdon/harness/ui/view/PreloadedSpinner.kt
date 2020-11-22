@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatSpinner
 import com.balsdon.harness.R
 
 class PreloadedSpinner(context: Context, attrs: AttributeSet) : AppCompatSpinner(context, attrs) {
+    private lateinit var itemValues: List<Int>
     init {
         context.theme.obtainStyledAttributes(
             attrs,
@@ -16,9 +17,6 @@ class PreloadedSpinner(context: Context, attrs: AttributeSet) : AppCompatSpinner
         ).apply {
             try {
                 getResourceId(R.styleable.PreloadedSpinner_items, R.array.template).apply {
-                    val int1 = R.array.screen_size_list
-                    val int2 = R.array.time_speed_list
-
                     adapter = ArrayAdapter.createFromResource(
                         context,
                         this,

@@ -13,7 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:context=".HarnessActivity" />
+        tools:context=".ui.activity.HarnessActivity" />
 
     <androidx.constraintlayout.motion.widget.MotionLayout
         android:id="@+id/motionLayout"
@@ -27,7 +27,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:elevation="5dp"
-        tools:context=".HarnessActivity" />
+        tools:context=".ui.activity.HarnessActivity" />
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

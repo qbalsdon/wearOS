@@ -12,7 +12,7 @@
         android:id="@+id/settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.fragment.watch.WatchFragment">
+        tools:context=".ui.fragment.WatchFragment">
 
         <FrameLayout
             android:id="@+id/displaySettingsContainer"

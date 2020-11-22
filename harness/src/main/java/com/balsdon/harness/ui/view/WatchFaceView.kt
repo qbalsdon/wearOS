@@ -28,8 +28,27 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
             invalidate()
         }
 
-    private var lastWidth = 1260
-    private var lastHeight = 1260
+    //TODO: Implement FaceMode
+    var faceMode: WatchFaceMode = WatchFaceMode.Round
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    var size: Int = 1280
+        set(value) {
+            field = value
+
+            layoutParams = layoutParams.apply {
+                height = value
+                width = value
+            }
+            updateDimensions()
+            invalidate()
+        }
+
+    private var lastWidth = size
+    private var lastHeight = size
 
     private val transparentPaint = Paint().apply {
         xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
@@ -49,7 +68,7 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
     }
 
     private val checkeredPaint = Paint().apply {
-        val tileSize = 50
+        val tileSize = 20
         shader = BitmapShader(
             Bitmap.createBitmap(
                 tileSize * 2,
@@ -64,7 +83,8 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
                                 y * tileSize.toFloat(),
                                 tileSize.toFloat() * (x + 1),
                                 tileSize.toFloat() * (y + 1),
-                                if (x == y)  lightGrayPaint else darkGrayPaint)
+                                if (x == y) lightGrayPaint else darkGrayPaint
+                            )
                         }
                     }
                 }
@@ -75,14 +95,18 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     init {
         viewTreeObserver.addOnGlobalLayoutListener {
-            if (lastWidth != width || lastHeight != height) {
-                lastWidth = width
-                lastHeight = height
-                watchFaceRenderer.surfaceChanged(lastWidth, lastHeight)
-                createMaskBitmap()
-            }
+            updateDimensions()
         }
         watchFaceRenderer.initStyle()
+    }
+
+    private fun updateDimensions() {
+        if (lastWidth != width || lastHeight != height) {
+            lastWidth = width
+            lastHeight = height
+            watchFaceRenderer.surfaceChanged(lastWidth, lastHeight)
+            createMaskBitmap()
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -101,9 +125,14 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
         ).apply {
             applyCanvas {
                 clipOutPath(Path().apply {
-                    addCircle(lastWidth.toFloat() / 2F, lastHeight.toFloat() / 2F, lastWidth / 2F, Path.Direction.CCW)
+                    addCircle(
+                        lastWidth.toFloat() / 2F,
+                        lastHeight.toFloat() / 2F,
+                        lastWidth / 2F,
+                        Path.Direction.CCW
+                    )
                 })
-                drawRect(0F,0F,lastWidth.toFloat(), lastHeight.toFloat(), checkeredPaint)
+                drawRect(0F, 0F, lastWidth.toFloat(), lastHeight.toFloat(), checkeredPaint)
             }
         }
     }
