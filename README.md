@@ -52,7 +52,7 @@ Feel free to fork this repository and create your own faces.
 | TASK | Harness Module | Harness: Wire up ViewModel | Support Square and Round mode  | :ballot_box_with_check: |
 | BUG | Harness Module | Harness | Display 12 instead of "00" | :ballot_box_with_check: |
 | BUG | Harness Module | Harness: TimePickerView | Allow users to see the date | :ballot_box_with_check: |
-| BUG | Harness Module | Harness: TimePickerView | Allow users to modify the date | :pushpin: |
+| BUG | Harness Module | Harness: TimePickerView | Allow users to modify the date | :ballot_box_with_check: |
 | TASK | Harness Module | Harness: Wire up ViewModel | Support 24-Hour mode  | :ballot_box_with_check: |
 | TASK | Harness Module | Harness Activity | Inject the coroutineTimerTicker | :ballot_box_with_check: |
 | TASK | Renderer Module | Build Flavours | Add an example | :pushpin: |
