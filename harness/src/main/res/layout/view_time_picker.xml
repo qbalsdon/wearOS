@@ -5,6 +5,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <TextView
+        android:id="@+id/dateLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        tools:text="13 Dec 2020"
+        android:textSize="20sp"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
     <ImageView
         android:id="@+id/hourUpButton"
         android:layout_width="wrap_content"
@@ -12,7 +24,7 @@
         android:src="@android:drawable/arrow_up_float"
         app:layout_constraintStart_toStartOf="@id/hourLabel"
         app:layout_constraintEnd_toEndOf="@id/hourLabel"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateLabel"
         />
     <ImageView
         android:id="@+id/minuteUpButton"
@@ -21,7 +33,7 @@
         android:src="@android:drawable/arrow_up_float"
         app:layout_constraintStart_toStartOf="@id/minuteLabel"
         app:layout_constraintEnd_toEndOf="@id/minuteLabel"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateLabel"
         />
     <ImageView
         android:id="@+id/secondUpButton"
@@ -30,7 +42,7 @@
         android:src="@android:drawable/arrow_up_float"
         app:layout_constraintStart_toStartOf="@id/secondLabel"
         app:layout_constraintEnd_toEndOf="@id/secondLabel"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateLabel"
         />
 
     <TextView
@@ -141,4 +153,15 @@
         app:layout_constraintTop_toBottomOf="@id/hourLabel"
         />
 
+    <TextView
+        android:id="@+id/meridiemText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:textSize="20sp"
+        tools:text="pm"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toEndOf="@id/secondLabel"
+        app:layout_constraintBottom_toBottomOf="@id/secondLabel"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.harness_activity.*
 import kotlinx.coroutines.MainScope
 import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HarnessActivity : AppCompatActivity(), TimeHandler {
@@ -22,9 +23,10 @@ class HarnessActivity : AppCompatActivity(), TimeHandler {
         watchContainer.tag as String == getString(R.string.layout_condensed)
     }
 
+    @Inject
+    lateinit var ticker: TimeTicker
+
     private lateinit var viewModel: HarnessViewModel
-    //TODO: Inject the coroutineTimerTicker - not sure I like the dependency here
-    private val ticker: TimeTicker = CoroutineTimerTicker(MainScope())
 
     private val settingsObserver = Observer<HarnessViewModel.WatchDisplaySettings> { newSettings ->
         run {

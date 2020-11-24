@@ -14,6 +14,7 @@ import javax.inject.Inject
 class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     @Inject
     lateinit var watchFaceRenderer: WatchFaceRenderer
+
     var currentTime: Long = System.currentTimeMillis()
         set(value) {
             field = value
@@ -28,7 +29,6 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
             invalidate()
         }
 
-    //TODO: Implement FaceMode
     var faceMode: WatchFaceMode = WatchFaceMode.Round
         set(value) {
             field = value
@@ -140,7 +140,9 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
     override fun onDraw(canvas: Canvas?) {
         canvas?.apply {
             watchFaceRenderer.renderWatchFace(canvas, currentTime)
-            canvas.drawBitmap(mask, 0F, 0F, blackPaint)
+            if (faceMode == WatchFaceMode.Round) {
+                canvas.drawBitmap(mask, 0F, 0F, blackPaint)
+            }
         }
     }
 }

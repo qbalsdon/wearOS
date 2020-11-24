@@ -7,16 +7,14 @@ import android.content.IntentFilter
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.support.wearable.watchface.CanvasWatchFaceService
 import android.support.wearable.watchface.WatchFaceService
 import android.support.wearable.watchface.WatchFaceStyle
 import android.view.SurfaceHolder
 import android.widget.Toast
+import com.balsdon.watchapplication.EngineHandler.Companion.MSG_UPDATE_TIME
 import com.balsdon.watchfacerenderer.WatchFaceRenderer
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.ref.WeakReference
 import java.util.*
 import javax.inject.Inject
 
@@ -25,11 +23,6 @@ import javax.inject.Inject
  * second hand.
  */
 private const val INTERACTIVE_UPDATE_RATE_MS = 1000
-
-/**
- * Handler message id for updating the time periodically in interactive mode.
- */
-private const val MSG_UPDATE_TIME = 0
 
 /**
  * Analog watch face with a ticking second hand. In ambient mode, the second hand isn"t
@@ -53,20 +46,7 @@ class MyWatchFace : CanvasWatchFaceService() {
         return Engine(watchFaceRenderer)
     }
 
-    private class EngineHandler(reference: MyWatchFace.Engine) : Handler() {
-        private val weakReference: WeakReference<MyWatchFace.Engine> = WeakReference(reference)
-
-        override fun handleMessage(msg: Message) {
-            val engine = weakReference.get()
-            if (engine != null) {
-                when (msg.what) {
-                    MSG_UPDATE_TIME -> engine.handleUpdateTimeMessage()
-                }
-            }
-        }
-    }
-
-    inner class Engine(private val faceRenderer: com.balsdon.watchfacerenderer.WatchFaceRenderer) : CanvasWatchFaceService.Engine() {
+    inner class Engine(private val faceRenderer: WatchFaceRenderer) : CanvasWatchFaceService.Engine() {
         private var hasRegisteredTimeZoneReceiver = false
 
         /* Handler to update the time once a second in interactive mode. */

@@ -45,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/startMargin"
         android:layout_marginEnd="@dimen/startMargin"
-        android:enabled="false"
         android:text="@string/settings_24_hour_mode"
 
         app:layout_constraintLeft_toLeftOf="parent"

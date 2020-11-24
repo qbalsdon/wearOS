@@ -2,9 +2,11 @@ package com.balsdon.harness.ui.view
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.balsdon.harness.R
 import kotlinx.android.synthetic.main.view_time_picker.view.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 class TimePickerView (
@@ -17,14 +19,22 @@ class TimePickerView (
     }
 
     companion object {
-        //const val DEFAULT_MODE //TODO: 24 / 12 hour mode
         const val DEFAULT_SEPARATOR = "-"
+        const val DEFAULT_TWENTY_FOUR_HOUR_MODE = false
         const val DEFAULT_INCREMENT = 1
+        const val DATE_FORMAT = "dd MMM yyyy"
     }
 
     private var separator = DEFAULT_SEPARATOR
         set(value) {
             field = value
+            updateLabels()
+        }
+
+    var isTwentyFourHour = DEFAULT_TWENTY_FOUR_HOUR_MODE
+        set(value) {
+            field = value
+            meridiemText.visibility = if (value) View.GONE else View.VISIBLE
             updateLabels()
         }
 
@@ -92,6 +102,15 @@ class TimePickerView (
         hourMinuteSeparator.text = separator
         minuteSecondSeparator.text = separator
 
+        with(Calendar.getInstance().apply { timeInMillis = this@TimePickerView.time }) {
+            dateLabel.text = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(this.time)
+            meridiemText.text = this@TimePickerView.resources.getString(
+                if (this.get(Calendar.AM_PM) == Calendar.AM)
+                    R.string.am
+                else
+                    R.string.pm
+            )
+        }
         hourLabel.text = time.hour().zeroPad()
         minuteLabel.text = time.minute().zeroPad()
         secondLabel.text = time.second().zeroPad()
@@ -101,13 +120,13 @@ class TimePickerView (
     private fun Int.zeroPad(): String =
         this.toString().padStart(2, '0')
 
-    private fun Long.hour(): Int = this.timeValue(Calendar.HOUR)
+    private fun Long.hour(): Int = this.timeValue(if (isTwentyFourHour) Calendar.HOUR_OF_DAY else Calendar.HOUR)
     private fun Long.minute(): Int = this.timeValue(Calendar.MINUTE)
     private fun Long.second(): Int = this.timeValue(Calendar.SECOND)
 
     private fun Long.timeValue(value: Int): Int {
-        require(value == Calendar.HOUR || value == Calendar.MINUTE || value == Calendar.SECOND)
-        { "Time Value not one of Calendar.HOUR | Calendar.MINUTE | Calendar.SECOND" }
+        require(value in arrayOf(Calendar.HOUR_OF_DAY, Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND))
+        { "Time Value not one of Calendar.HOUR_OF_DAY | Calendar.HOUR | Calendar.MINUTE | Calendar.SECOND" }
 
         val cal = Calendar.getInstance()
         cal.timeInMillis = this
@@ -119,8 +138,8 @@ class TimePickerView (
     private fun Long.addSecond(value: Int) = this.addTime(value, Calendar.SECOND)
 
     private fun Long.addTime(value: Int, timeElement: Int): Long {
-        require(timeElement == Calendar.HOUR || timeElement == Calendar.MINUTE || timeElement == Calendar.SECOND)
-        { "Time Element Value not one of Calendar.HOUR | Calendar.MINUTE | Calendar.SECOND" }
+        require(timeElement in arrayOf(Calendar.HOUR, Calendar.MINUTE, Calendar.SECOND))
+        { "Time Element Value [$timeElement] not one of Calendar.HOUR | Calendar.MINUTE | Calendar.SECOND" }
 
         return Calendar.getInstance().apply {
             timeInMillis = this@TimePickerView.time

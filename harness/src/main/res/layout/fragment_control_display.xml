@@ -95,6 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
+        android:orientation="horizontal"
         android:layout_marginLeft="@dimen/startMargin"
         android:layout_marginRight="@dimen/startMargin"
         app:layout_constraintStart_toStartOf="parent"
@@ -103,16 +104,17 @@
         >
         <RadioButton
             android:id="@+id/faceTypeRound"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:checked="true"
             android:text="@string/settings_face_type_round"
             />
         <RadioButton
             android:id="@+id/faceTypeSquare"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:enabled="false"
+            android:layout_weight="1"
             android:text="@string/settings_face_type_square"
             />
     </RadioGroup>

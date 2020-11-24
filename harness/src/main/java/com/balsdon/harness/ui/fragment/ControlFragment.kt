@@ -103,7 +103,10 @@ class ControlFragment : HarnessFragment() {
     private fun CharSequence.intValue(): Int =
         Regex("[^0-9]").replace(this, "").toInt()
 
-    override fun settingsUpdated(settings: HarnessViewModel.WatchDisplaySettings) = Unit
+    override fun settingsUpdated(settings: HarnessViewModel.WatchDisplaySettings) {
+        timePicker.isTwentyFourHour = settings.isTwentyFourHourMode
+    }
+
     override fun timeUpdated(time: Long) {
         timePicker.time = time
     }

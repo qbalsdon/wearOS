@@ -18,4 +18,6 @@
     <string name="settings_face_type_round">Round</string>
     <string name="settings_face_type_square">Square</string>
     <string name="settings_face_type">Face shape</string>
+    <string name="am">am</string>
+    <string name="pm">pm</string>
 </resources>
