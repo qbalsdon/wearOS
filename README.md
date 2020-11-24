@@ -17,6 +17,7 @@ The reason for the harness is that the emulator is not really "fit for purpose" 
   - Is over 500 lines long
   - Has an inner class `Engine`, which handles both user control and drawing
   - Cannot be controlled in the emulator, and are difficult to engage on a real device
+  - Uses deprecated [Handler][HANDLER] as part of the example and templates, a [known issue][HANDLERISSUE]
 
 The app uses [Hilt][HILT] for injecting the dependency - this enables developers to create build flavours with different watch faces. This is done in the [di][DIFOLDER] folder. Please review the [Hilt example code][HILTEXAMPLE] or go to the [Dagger site][HILT2] to read more
 
@@ -27,7 +28,7 @@ Feel free to fork this repository and create your own faces.
 ### Changes
 1. [Changes from template to basic architecture solution][PULL1]
 1. [Move WatchFaceRenderer and example into separate module][PULL2]
-1. Created a test harness with more granular controls - [REF TODO]
+1. [Created a test harness with more granular controls] [PULL3]
 1. Create a build variant to demonstrate utility
 
 ### Tasks
@@ -66,7 +67,10 @@ Feel free to fork this repository and create your own faces.
 [DIFOLDER]: ./app/src/main/java/com/balsdon/watchapplication/di/WatchFaceModule.kt
 [PULL1]: https://github.com/qbalsdon/wearOS/pull/1
 [PULL2]: https://github.com/qbalsdon/wearOS/pull/2
+[PULL3]: https://github.com/qbalsdon/wearOS/pull/4
 [SIDESHEET]: https://material.io/components/sheets-side#specs
 [MOTIONLAYOUT]: https://developer.android.com/training/constraint-layout/motionlayout
 [HILT2]: https://dagger.dev/hilt/
 [WEAROSEMULATOR]: https://developer.android.com/wear/releases?authuser=3#Jan-25-2018-release
+[HANDLER]: https://developer.android.com/reference/android/os/Handler
+[HANDLERISSUE]: https://github.com/android/wear-os-samples/issues/45
