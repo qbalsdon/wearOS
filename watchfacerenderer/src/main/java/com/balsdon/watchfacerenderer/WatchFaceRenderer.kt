@@ -35,7 +35,6 @@ abstract class WatchFaceRenderer(resources: Resources? = null) {
 
     //Optional methods - if the face requires images
     protected open fun initImages(resources: Resources) = Unit
-    open fun scaleImages(width: Int) = Unit
 
     abstract fun surfaceChanged(width: Int, height: Int)
     abstract fun drawWatchFace(canvas: Canvas)

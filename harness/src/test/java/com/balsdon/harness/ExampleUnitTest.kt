@@ -1,4 +1,4 @@
-package com.balsdon.watchfacerenderer
+package com.balsdon.harness
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

@@ -1,6 +1,7 @@
 plugins {
-    id 'com.android.library'
+    id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
 
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
@@ -11,13 +12,13 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        minSdkVersion 28
+        applicationId "com.balsdon.harness"
+        minSdkVersion 29
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -41,10 +42,15 @@ dependencies {
     implementation "androidx.core:core-ktx:$core_ktx"
     implementation "androidx.appcompat:appcompat:$appcompat"
     implementation "com.google.android.material:material:$material"
-    implementation "androidx.palette:palette-ktx:$palette_ktx"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintlayout"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_ext_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_ext_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_ext_version"
 
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    implementation project(path: ':watchfacerenderer')
 
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
