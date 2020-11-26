@@ -60,6 +60,9 @@ Feel free to fork this repository and create your own faces.
 | TASK | Renderer Module | Build Flavours | JetPack compose watch face | :pushpin: |
 | TASK | Watch Face App | Watch Face | Complications example | :pushpin: |
 | TASK | Watch Face App | Watch Face | Remove the Handler in the engine | :ballot_box_with_check: |
+| TASK | Project | General | Update to [ViewBinding][VIEWBINDING] | :pushpin: |
+| BUG | Harness | View | Calendar not showing / hiding | :ballot_box_with_check: |
+| TASK | Harness | View |Go back in time option> | :pushpin: |
 
 [WALLPAPER]: https://developer.android.com/reference/android/service/wallpaper/WallpaperService
 [HILT]: https://developer.android.com/training/dependency-injection/hilt-android
@@ -74,3 +77,4 @@ Feel free to fork this repository and create your own faces.
 [WEAROSEMULATOR]: https://developer.android.com/wear/releases?authuser=3#Jan-25-2018-release
 [HANDLER]: https://developer.android.com/reference/android/os/Handler
 [HANDLERISSUE]: https://github.com/android/wear-os-samples/issues/45
+[VIEWBINDING]: https://developer.android.com/topic/libraries/view-binding
