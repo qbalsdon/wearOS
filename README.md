@@ -19,7 +19,7 @@ The reason for the harness is that the emulator is not really "fit for purpose" 
   - Cannot be controlled in the emulator, and are difficult to engage on a real device
   - Uses deprecated [Handler][HANDLER] as part of the example and templates, a [known issue][HANDLERISSUE]
 
-The app uses [Hilt][HILT] for injecting the dependency - this enables developers to create build flavours with different watch faces. This is done in the [di][DIFOLDER] folder. Please review the [Hilt example code][HILTEXAMPLE] or go to the [Dagger site][HILT2] to read more
+The app uses [Hilt][HILT] for injecting the dependency - this enables developers to create build flavours with different watch faces. This is done in the [di][DIFOLDER] folder. Please review the [Hilt example code][HILTEXAMPLE] or go to the [Dagger site][HILT2] to read more. The only issue with injecting a view that draws on the canvas is that it can't render in preview :disappointed:
 
 The harness app also uses two different layout modes, one for landscape tablets that is quite basic, and a phone view that uses a rudimentary implementation of [side sheets][SIDESHEET]. This was really great learning for [motion layout][MOTIONLAYOUT] as well.
 
