@@ -13,7 +13,6 @@ import com.balsdon.harness.ui.viewmodel.HarnessViewModel
 import com.balsdon.harness.ui.viewmodel.HarnessViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.harness_activity.*
-import kotlinx.coroutines.MainScope
 import java.util.*
 import javax.inject.Inject
 

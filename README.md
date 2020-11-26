@@ -28,7 +28,7 @@ Feel free to fork this repository and create your own faces.
 ### Changes
 1. [Changes from template to basic architecture solution][PULL1]
 1. [Move WatchFaceRenderer and example into separate module][PULL2]
-1. [Created a test harness with more granular controls] [PULL3]
+1. [Created a test harness with more granular controls][PULL3]
 1. Create a build variant to demonstrate utility
 
 ### Tasks

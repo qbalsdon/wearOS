@@ -1,6 +1,5 @@
 package com.balsdon.harness.di
 
-import android.content.Context
 import com.balsdon.harness.ui.activity.CoroutineTimerTicker
 import com.balsdon.harness.ui.activity.TimeTicker
 import dagger.Module

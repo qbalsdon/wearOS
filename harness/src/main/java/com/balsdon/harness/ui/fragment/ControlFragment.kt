@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
 import com.balsdon.harness.R
-import com.balsdon.harness.ui.viewmodel.HarnessViewModel
 import com.balsdon.harness.ui.view.TimePickerView
 import com.balsdon.harness.ui.view.WatchFaceMode
+import com.balsdon.harness.ui.viewmodel.HarnessViewModel
 import kotlinx.android.synthetic.main.fragment_control_display.*
 import kotlinx.android.synthetic.main.fragment_control_time.*
 
