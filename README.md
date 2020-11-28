@@ -60,7 +60,7 @@ Feel free to fork this repository and create your own faces.
 | TASK | Renderer Module | Build Flavours | JetPack compose watch face | :pushpin: |
 | TASK | Watch Face App | Watch Face | Complications example | :pushpin: |
 | TASK | Watch Face App | Watch Face | Remove the Handler in the engine | :ballot_box_with_check: |
-| TASK | Project | General | Update to [ViewBinding][VIEWBINDING] | :pushpin: |
+| TASK | Project | General | Update to [ViewBinding][VIEWBINDING] | :ballot_box_with_check: |
 | BUG | Harness | View | Calendar not showing / hiding | :ballot_box_with_check: |
 | TASK | Harness | View |Go back in time option> | :pushpin: |
 

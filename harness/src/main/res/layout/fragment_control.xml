@@ -23,7 +23,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <include layout="@layout/fragment_control_display" />
+            <include
+                android:id="@+id/displayControls"
+                layout="@layout/fragment_control_display" />
         </FrameLayout>
 
         <FrameLayout
@@ -35,7 +37,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/displaySettingsContainer">
 
-            <include layout="@layout/fragment_control_time" />
+            <include
+                android:id="@+id/timeControls"
+                layout="@layout/fragment_control_time" />
         </FrameLayout>
 
         <!-- <View

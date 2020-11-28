@@ -4,11 +4,16 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewbinding.ViewBinding
+import com.balsdon.harness.databinding.FragmentControlBinding
 import com.balsdon.harness.ui.viewmodel.HarnessViewModel
 import com.balsdon.harness.ui.viewmodel.HarnessViewModelFactory
 
-abstract class HarnessFragment: Fragment() {
+abstract class HarnessFragment<T : ViewBinding>: Fragment() {
     protected lateinit var viewModel: HarnessViewModel
+    protected var bindingReference: T? = null
+    protected val binding get() = bindingReference!!
+
     abstract fun settingsUpdated(settings: HarnessViewModel.WatchDisplaySettings)
     abstract fun timeUpdated(time: Long)
 
@@ -43,5 +48,10 @@ abstract class HarnessFragment: Fragment() {
             watchTime.removeObserver(timeObserver)
         }
         super.onPause()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        bindingReference = null
     }
 }

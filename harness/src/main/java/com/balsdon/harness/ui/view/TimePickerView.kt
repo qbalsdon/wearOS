@@ -4,10 +4,11 @@ import android.content.Context
 import android.transition.AutoTransition
 import android.transition.TransitionManager
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.balsdon.harness.R
-import kotlinx.android.synthetic.main.view_time_picker.view.*
+import com.balsdon.harness.databinding.ViewTimePickerBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,7 +16,6 @@ class TimePickerView(
     context: Context,
     attrs: AttributeSet
 ) : ConstraintLayout(context, attrs) {
-
     interface TimeChangeNotifier {
         fun onTimeChanged()
     }
@@ -27,6 +27,9 @@ class TimePickerView(
         const val DATE_FORMAT = "dd MMM yyyy"
     }
 
+    private val binding: ViewTimePickerBinding =
+        ViewTimePickerBinding.inflate(LayoutInflater.from(context), this, true)
+
     private var separator = DEFAULT_SEPARATOR
         set(value) {
             field = value
@@ -36,7 +39,7 @@ class TimePickerView(
     var isTwentyFourHour = DEFAULT_TWENTY_FOUR_HOUR_MODE
         set(value) {
             field = value
-            meridiemText.visibility = if (value) View.GONE else View.VISIBLE
+            binding.meridiemText.visibility = if (value) View.GONE else View.VISIBLE
             updateLabels()
         }
 
@@ -50,7 +53,6 @@ class TimePickerView(
         }
 
     init {
-        inflate(context, R.layout.view_time_picker, this)
 
         context.theme.obtainStyledAttributes(
             attrs,
@@ -69,68 +71,68 @@ class TimePickerView(
             }
         }
 
-        hourUpButton.setOnClickListener {
+        binding.hourUpButton.setOnClickListener {
             time = time.addHour(DEFAULT_INCREMENT)
             timeChangeNotifier?.onTimeChanged()
         }
 
-        hourDownButton.setOnClickListener {
+        binding.hourDownButton.setOnClickListener {
             time = time.addHour(DEFAULT_INCREMENT * -1)
             timeChangeNotifier?.onTimeChanged()
         }
 
-        minuteUpButton.setOnClickListener {
+        binding.minuteUpButton.setOnClickListener {
             time = time.addMinute(DEFAULT_INCREMENT)
             timeChangeNotifier?.onTimeChanged()
         }
 
-        minuteDownButton.setOnClickListener {
+        binding.minuteDownButton.setOnClickListener {
             time = time.addMinute(DEFAULT_INCREMENT * -1)
             timeChangeNotifier?.onTimeChanged()
         }
 
-        secondUpButton.setOnClickListener {
+        binding.secondUpButton.setOnClickListener {
             time = time.addSecond(DEFAULT_INCREMENT)
             timeChangeNotifier?.onTimeChanged()
         }
 
-        secondDownButton.setOnClickListener {
+        binding.secondDownButton.setOnClickListener {
             time = time.addSecond(DEFAULT_INCREMENT * -1)
             timeChangeNotifier?.onTimeChanged()
         }
 
-        datePicker.setOnDateChangeListener { _, year, month, dayOfMonth ->
+        binding.datePicker.setOnDateChangeListener { _, year, month, dayOfMonth ->
             time = time.setDate(year, month, dayOfMonth)
             timeChangeNotifier?.onTimeChanged()
         }
 
-        expandButton.setOnClickListener {
+        binding.expandButton.setOnClickListener {
             TransitionManager.beginDelayedTransition(
-                datePickerCard,
+                binding.datePickerCard,
                 AutoTransition()
             )
-            datePicker.visibility =
-                if (datePicker.visibility == View.GONE) View.VISIBLE else View.GONE
+            binding.datePicker.visibility =
+                if (binding.datePicker.visibility == View.GONE) View.VISIBLE else View.GONE
         }
     }
 
     private fun updateLabels() {
-        hourMinuteSeparator.text = separator
-        minuteSecondSeparator.text = separator
+        binding.hourMinuteSeparator.text = separator
+        binding.minuteSecondSeparator.text = separator
 
         with(Calendar.getInstance().apply { timeInMillis = this@TimePickerView.time }) {
-            expandButton.text = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(this.time)
-            meridiemText.text = this@TimePickerView.resources.getString(
+            binding.expandButton.text = SimpleDateFormat(DATE_FORMAT, Locale.getDefault()).format(this.time)
+            binding.meridiemText.text = this@TimePickerView.resources.getString(
                 if (this.get(Calendar.AM_PM) == Calendar.AM)
                     R.string.am
                 else
                     R.string.pm
             )
         }
-        datePicker.date = time
-        hourLabel.text = time.hour().zeroPad()
-        minuteLabel.text = time.minute().zeroPad()
-        secondLabel.text = time.second().zeroPad()
+        binding.datePicker.date = time
+        binding.hourLabel.text = time.hour().zeroPad()
+        binding.minuteLabel.text = time.minute().zeroPad()
+        binding.secondLabel.text = time.second().zeroPad()
     }
 
     //region Utils

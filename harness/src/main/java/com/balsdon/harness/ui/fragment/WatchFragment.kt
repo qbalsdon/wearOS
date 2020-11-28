@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.balsdon.harness.R
+import com.balsdon.harness.databinding.FragmentWatchBinding
 import com.balsdon.harness.ui.viewmodel.HarnessViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_watch.*
 
 @AndroidEntryPoint
-class WatchFragment : HarnessFragment() {
+class WatchFragment : HarnessFragment<FragmentWatchBinding>() {
 
     companion object {
         fun newInstance() = WatchFragment()
@@ -20,24 +19,25 @@ class WatchFragment : HarnessFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_watch, container, false)
+        bindingReference = FragmentWatchBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun settingsUpdated(settings: HarnessViewModel.WatchDisplaySettings) {
-        watchFace.screenSettings.apply {
+        binding.watchFace.screenSettings.apply {
             isAmbientMode = settings.isAmbientMode
             isMuteMode = settings.isAmbientMode
             isLowBitAmbient = settings.isMuteModeToggle
             isBurnInProtection = settings.isLowBitAmbientToggle
             isTwentyFourHour = settings.isTwentyFourHourMode
         }
-        watchFace.apply {
+        binding.watchFace.apply {
             faceMode = settings.faceMode
             size = settings.size
         }
     }
 
     override fun timeUpdated(time: Long) {
-        watchFace.currentTime = time
+        binding.watchFace.currentTime = time
     }
 }
