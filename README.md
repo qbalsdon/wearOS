@@ -6,7 +6,7 @@ The goal is to demonstrate how to create
 - a testing harness for Wear OS watch faces
 - an architecture for separating concerns
 - utilise kotlin as a development language
-- minimise the barrier to entry for creating watch faces
+- minimise the barrier to entry for creating watch faces ([Google codelab][CODELAB])
 
 The reason for the harness is that the emulator is not really "fit for purpose" when it comes to the visual aspect of creating a watch face. It was last [updated in January 2018][WEAROSEMULATOR] and is just a skin of a normal phone emulator. The watch face platform seems to have been branched off the idea of [Android wallpapers][WALLPAPER]. This has several issues when it comes to creating a watch face with an emulator:
 - Wallpapers halt refreshing after 10-15 seconds, making it difficult to tell if the Watch Face is working or not
@@ -56,13 +56,13 @@ Feel free to fork this repository and create your own faces.
 | BUG | Harness Module | Harness: TimePickerView | Allow users to modify the date | :ballot_box_with_check: |
 | TASK | Harness Module | Harness: Wire up ViewModel | Support 24-Hour mode  | :ballot_box_with_check: |
 | TASK | Harness Module | Harness Activity | Inject the coroutineTimerTicker | :ballot_box_with_check: |
-| TASK | Renderer Module | Build Flavours | Add an example | :pushpin: |
-| TASK | Renderer Module | Build Flavours | JetPack compose watch face | :pushpin: |
+| TASK | Renderer Module | Build Flavours | Add an example (Not useful as DI does that work) | :x: |
+| TASK | Renderer Module | Build Flavours | JetPack compose watch face (Jetpack compose not currently compatible with WatchFace engine) | :construction: |
 | TASK | Watch Face App | Watch Face | Complications example | :pushpin: |
 | TASK | Watch Face App | Watch Face | Remove the Handler in the engine | :ballot_box_with_check: |
 | TASK | Project | General | Update to [ViewBinding][VIEWBINDING] | :ballot_box_with_check: |
 | BUG | Harness | View | Calendar not showing / hiding | :ballot_box_with_check: |
-| TASK | Harness | View |Go back in time option> | :pushpin: |
+| TASK | Harness | View | Go back in time option? | :pushpin: |
 
 [WALLPAPER]: https://developer.android.com/reference/android/service/wallpaper/WallpaperService
 [HILT]: https://developer.android.com/training/dependency-injection/hilt-android
@@ -78,3 +78,4 @@ Feel free to fork this repository and create your own faces.
 [HANDLER]: https://developer.android.com/reference/android/os/Handler
 [HANDLERISSUE]: https://github.com/android/wear-os-samples/issues/45
 [VIEWBINDING]: https://developer.android.com/topic/libraries/view-binding
+[CODELAB]: https://developer.android.com/codelabs/watchface#0
