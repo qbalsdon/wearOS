@@ -97,6 +97,7 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
         viewTreeObserver.addOnGlobalLayoutListener {
             updateDimensions()
         }
+        watchFaceRenderer.invalidate = ::invalidate
         watchFaceRenderer.initStyle()
     }
 

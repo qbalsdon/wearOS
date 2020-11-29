@@ -55,12 +55,12 @@ class MyWatchFace : CanvasWatchFaceService() {
         private val timeZoneReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 faceRenderer.setTimeZone(TimeZone.getDefault())
-                invalidate()
             }
         }
 
         override fun onCreate(holder: SurfaceHolder) {
             super.onCreate(holder)
+            faceRenderer.invalidate = ::invalidate
             faceRenderer.initStyle()
             setWatchFaceStyle(WatchFaceStyle.Builder(this@MyWatchFace)
                     .setAcceptsTapEvents(true)
@@ -89,10 +89,11 @@ class MyWatchFace : CanvasWatchFaceService() {
 
         override fun onAmbientModeChanged(inAmbientMode: Boolean) {
             super.onAmbientModeChanged(inAmbientMode)
-            faceRenderer.screenSettings = faceRenderer.screenSettings.copy(
+            if (faceRenderer.screenSettings.isAmbientMode != inAmbientMode) {
+                faceRenderer.screenSettings = faceRenderer.screenSettings.copy(
                     isAmbientMode = inAmbientMode
-            )
-
+                )
+            }
             // Check and trigger whether or not timer should be running (only
             // in active mode).
             updateTimer()
@@ -107,7 +108,6 @@ class MyWatchFace : CanvasWatchFaceService() {
                 faceRenderer.screenSettings = faceRenderer.screenSettings.copy(
                         isMuteMode = inMuteMode
                 )
-                invalidate()
             }
         }
 

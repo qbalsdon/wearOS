@@ -11,10 +11,12 @@ import java.util.*
 
 abstract class WatchFaceRenderer(resources: Resources? = null) {
     var currentTime: Calendar = Calendar.getInstance()
+    var invalidate: (() -> Unit)? = null
     var screenSettings: WatchScreenSettings = WatchScreenSettings()
         set(value) {
             field = value
             updateStyle()
+            invalidate?.invoke()
         }
 
     init {
@@ -23,6 +25,7 @@ abstract class WatchFaceRenderer(resources: Resources? = null) {
 
     fun setTimeZone(timeZone: TimeZone) {
         currentTime.timeZone = timeZone
+        invalidate?.invoke()
     }
 
     fun renderWatchFace(canvas: Canvas, time: Long) {
