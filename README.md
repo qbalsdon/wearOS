@@ -58,10 +58,12 @@ Feel free to fork this repository and create your own faces.
 | TASK | Harness Module | Harness Activity | Inject the coroutineTimerTicker | :ballot_box_with_check: |
 | TASK | Renderer Module | Build Flavours | Add an example (Not useful as DI does that work) | :x: |
 | TASK | Renderer Module | Build Flavours | JetPack compose watch face (Jetpack compose not currently compatible with WatchFace engine) | :construction: |
-| TASK | Watch Face App | Watch Face | Complications example | :pushpin: |
+| TASK | Watch Face App | Watch Face | Complications example | :ballot_box_with_check: |
 | TASK | Watch Face App | Watch Face | Remove the Handler in the engine | :ballot_box_with_check: |
 | TASK | Project | General | Update to [ViewBinding][VIEWBINDING] | :ballot_box_with_check: |
 | BUG | Harness | View | Calendar not showing / hiding | :ballot_box_with_check: |
+| TASK | Watch Face App | Watch Face | Complications event handling | :pushpin: |
+| TASK | Watch Face App | Harness | Complications placeholder rendering on harness | :pushpin: |
 | TASK | Harness | View | Go back in time option? | :pushpin: |
 
 [WALLPAPER]: https://developer.android.com/reference/android/service/wallpaper/WallpaperService

@@ -5,3 +5,5 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class WatchFaceApplication : Application()
+
+fun log(message: String) = android.util.Log.d("TAG", message)

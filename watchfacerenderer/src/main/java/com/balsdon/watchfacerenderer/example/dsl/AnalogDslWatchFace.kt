@@ -6,7 +6,6 @@ import com.balsdon.watchfacerenderer.R
 import com.balsdon.watchfacerenderer.WatchFaceRenderer
 import com.balsdon.watchfacerenderer.example.dsl.model.AnalogWatchFaceStyle
 import com.balsdon.watchfacerenderer.example.dsl.model.EMPTY_IMAGE_RESOURCE
-import com.balsdon.watchfacerenderer.example.dsl.service.WatchFaceStyleDSL
 import com.balsdon.watchfacerenderer.example.dsl.service.analogWatchFaceStyle
 import java.util.*
 

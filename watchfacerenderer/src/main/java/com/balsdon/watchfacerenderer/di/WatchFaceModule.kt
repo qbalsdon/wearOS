@@ -16,5 +16,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 object WatchFaceModule {
     @Provides
     fun provideWatchFaceRenderer(@ApplicationContext context: Context): WatchFaceRenderer
-            = AnalogDslWatchFace(context.resources)
+            = ExampleWatchRenderer(context.resources)
+
+
 }

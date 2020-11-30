@@ -1,4 +1,4 @@
-package com.balsdon.watchapplication
+package com.balsdon.watchapplication.service
 
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -11,9 +11,9 @@ import java.lang.ref.WeakReference
  * It should probably have a message queue
  */
 
-class EngineHandler(reference: MyWatchFace.Engine) : MessageReceiver {
+class EngineHandler(reference: TimeUpdateHandler) : MessageReceiver {
 
-    private val weakReference: WeakReference<MyWatchFace.Engine> = WeakReference(reference)
+    private val weakReference: WeakReference<TimeUpdateHandler> = WeakReference(reference)
 
     override fun sendEmptyMessageDelayed(messageCode: Int, delayMs: Long) {
         val engine = weakReference.get()

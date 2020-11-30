@@ -19,7 +19,7 @@
             android:value="@integer/google_play_services_version" />
 
         <service
-            android:name=".MyWatchFace"
+            android:name=".ComplicatedWatchFaceService"
             android:label="@string/my_analog_name"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
@@ -38,14 +38,31 @@
             <meta-data
                 android:name="android.service.wallpaper"
                 android:resource="@xml/watch_face" />
+
+            <!-- Allows preview to display settings -->
+            <meta-data
+                android:name="com.google.android.wearable.watchface.wearableConfigurationAction"
+                android:value="com.example.android.wearable.watchface.CONFIG_COMPLICATION"/>
         </service>
+
+        <!--To view complications page-->
+        <activity android:name="android.support.wearable.complications.ComplicationHelperActivity"/>
+
+        <activity
+            android:name=".activity.ComplicationConfigActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="com.example.android.wearable.watchface.CONFIG_COMPLICATION"/>
+                <category android:name="com.google.android.wearable.watchface.category.WEARABLE_CONFIGURATION"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
     <!-- Required for complications to receive complication data and open the provider chooser. -->
     <uses-feature android:name="android.hardware.type.watch" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
     <uses-permission android:name="com.google.android.wearable.permission.RECEIVE_COMPLICATION_DATA" />
 
 </manifest>

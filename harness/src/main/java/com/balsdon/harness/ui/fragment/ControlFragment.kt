@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.TextView
-import androidx.viewbinding.ViewBinding
 import com.balsdon.harness.R
 import com.balsdon.harness.databinding.FragmentControlBinding
 import com.balsdon.harness.ui.view.TimePickerView

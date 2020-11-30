@@ -1,4 +1,4 @@
-package com.balsdon.watchapplication
+package com.balsdon.watchapplication.service
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -7,14 +7,15 @@ import android.content.IntentFilter
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.os.Bundle
+import android.support.wearable.complications.ComplicationData
 import android.support.wearable.watchface.CanvasWatchFaceService
 import android.support.wearable.watchface.WatchFaceService
 import android.support.wearable.watchface.WatchFaceStyle
 import android.view.SurfaceHolder
 import android.widget.Toast
-import com.balsdon.watchapplication.EngineHandler.Companion.MSG_UPDATE_TIME
+import com.balsdon.watchapplication.R
+import com.balsdon.watchapplication.service.EngineHandler.Companion.MSG_UPDATE_TIME
 import com.balsdon.watchfacerenderer.WatchFaceRenderer
-import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
 
@@ -37,16 +38,18 @@ private const val INTERACTIVE_UPDATE_RATE_MS = 1000
  * in the Google Watch Face Code Lab:
  * https://codelabs.developers.google.com/codelabs/watchface/index.html#0
  */
-@AndroidEntryPoint
-class MyWatchFace : CanvasWatchFaceService() {
+
+abstract class BaseWatchFaceService : CanvasWatchFaceService() {
     @Inject
     lateinit var watchFaceRenderer: WatchFaceRenderer
+    protected open var complicationController: ComplicationController? = null
 
-    override fun onCreateEngine(): Engine {
-        return Engine(watchFaceRenderer)
+    override fun onCreateEngine(): BaseWatchFaceEngine {
+        return BaseWatchFaceEngine(watchFaceRenderer)
     }
 
-    inner class Engine(private val faceRenderer: WatchFaceRenderer) : CanvasWatchFaceService.Engine() {
+    inner class BaseWatchFaceEngine(private val faceRenderer: WatchFaceRenderer) :
+        CanvasWatchFaceService.Engine(), TimeUpdateHandler {
         private var hasRegisteredTimeZoneReceiver = false
 
         /* Handler to update the time once a second in interactive mode. */
@@ -60,11 +63,19 @@ class MyWatchFace : CanvasWatchFaceService() {
 
         override fun onCreate(holder: SurfaceHolder) {
             super.onCreate(holder)
+
             faceRenderer.invalidate = ::invalidate
             faceRenderer.initStyle()
-            setWatchFaceStyle(WatchFaceStyle.Builder(this@MyWatchFace)
+            setWatchFaceStyle(
+                WatchFaceStyle.Builder(this@BaseWatchFaceService)
                     .setAcceptsTapEvents(true)
-                    .build())
+                    .build()
+            )
+
+            complicationController?.apply {
+                initializeComplications()
+                setActiveComplications(*complicationIdList)
+            }
         }
 
         override fun onDestroy() {
@@ -74,11 +85,15 @@ class MyWatchFace : CanvasWatchFaceService() {
 
         override fun onPropertiesChanged(properties: Bundle) {
             super.onPropertiesChanged(properties)
+            val lowBitAmbientStatus = properties.getBoolean(WatchFaceService.PROPERTY_LOW_BIT_AMBIENT, false)
+            val isBurnInProtectionMode = properties.getBoolean(WatchFaceService.PROPERTY_BURN_IN_PROTECTION, false)
             faceRenderer.screenSettings = faceRenderer.screenSettings.copy(
-                    isLowBitAmbient = properties.getBoolean(
-                            WatchFaceService.PROPERTY_LOW_BIT_AMBIENT, false),
-                    isBurnInProtection = properties.getBoolean(
-                            WatchFaceService.PROPERTY_BURN_IN_PROTECTION, false)
+                isLowBitAmbient = lowBitAmbientStatus,
+                isBurnInProtection = isBurnInProtectionMode
+            )
+            complicationController?.updateProperties(
+                isLowBitAmbient = lowBitAmbientStatus,
+                isBurnInProtection = isBurnInProtectionMode
             )
         }
 
@@ -93,6 +108,7 @@ class MyWatchFace : CanvasWatchFaceService() {
                 faceRenderer.screenSettings = faceRenderer.screenSettings.copy(
                     isAmbientMode = inAmbientMode
                 )
+                complicationController?.onAmbientModeChanged(inAmbientMode)
             }
             // Check and trigger whether or not timer should be running (only
             // in active mode).
@@ -106,7 +122,7 @@ class MyWatchFace : CanvasWatchFaceService() {
             /* Dim display in mute mode. */
             if (faceRenderer.screenSettings.isMuteMode != inMuteMode) {
                 faceRenderer.screenSettings = faceRenderer.screenSettings.copy(
-                        isMuteMode = inMuteMode
+                    isMuteMode = inMuteMode
                 )
             }
         }
@@ -122,6 +138,7 @@ class MyWatchFace : CanvasWatchFaceService() {
             faceRenderer.apply {
                 surfaceChanged(width, height)
             }
+            complicationController?.onSurfaceChanged(width, height)
         }
 
         /**
@@ -140,13 +157,18 @@ class MyWatchFace : CanvasWatchFaceService() {
                     // The user has completed the tap gesture.
                     // TODO: Add code to handle the tap gesture.
                     Toast.makeText(applicationContext, R.string.message, Toast.LENGTH_SHORT)
-                            .show()
+                        .show()
             }
             invalidate()
         }
 
-        override fun onDraw(canvas: Canvas, bounds: Rect) =
-                faceRenderer.renderWatchFace(canvas, System.currentTimeMillis())
+        override fun onDraw(canvas: Canvas, bounds: Rect) {
+            val now = System.currentTimeMillis()
+            faceRenderer.renderWatchFace(canvas, now)
+            complicationController?.apply {
+                complicationRenderer.drawComplications(canvas, now)
+            }
+        }
 
         override fun onVisibilityChanged(visible: Boolean) {
             super.onVisibilityChanged(visible)
@@ -164,13 +186,20 @@ class MyWatchFace : CanvasWatchFaceService() {
             updateTimer()
         }
 
+        override fun onComplicationDataUpdate(watchFaceComplicationId: Int, data: ComplicationData?) {
+            complicationController?.apply {
+                onComplicationDataUpdate(watchFaceComplicationId, data)
+                invalidate()
+            } ?: super.onComplicationDataUpdate(watchFaceComplicationId, data)
+        }
+
         private fun registerReceiver() {
             if (hasRegisteredTimeZoneReceiver) {
                 return
             }
             hasRegisteredTimeZoneReceiver = true
             val filter = IntentFilter(Intent.ACTION_TIMEZONE_CHANGED)
-            this@MyWatchFace.registerReceiver(timeZoneReceiver, filter)
+            this@BaseWatchFaceService.registerReceiver(timeZoneReceiver, filter)
         }
 
         private fun unregisterReceiver() {
@@ -178,7 +207,7 @@ class MyWatchFace : CanvasWatchFaceService() {
                 return
             }
             hasRegisteredTimeZoneReceiver = false
-            this@MyWatchFace.unregisterReceiver(timeZoneReceiver)
+            this@BaseWatchFaceService.unregisterReceiver(timeZoneReceiver)
         }
 
         /**
@@ -202,7 +231,7 @@ class MyWatchFace : CanvasWatchFaceService() {
         /**
          * Handle updating the time periodically in interactive mode.
          */
-        fun handleUpdateTimeMessage() {
+        override fun handleUpdateTimeMessage() {
             invalidate()
             if (shouldTimerBeRunning()) {
                 val timeMs = System.currentTimeMillis()
