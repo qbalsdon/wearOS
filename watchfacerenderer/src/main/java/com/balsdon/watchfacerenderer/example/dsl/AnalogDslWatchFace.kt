@@ -329,7 +329,7 @@ class AnalogDslWatchFace(val resources: Resources? = null) : WatchFaceRenderer(r
     //endregion
 
     //region WatchFaceRenderer methods
-    override fun initStyle() {
+    override fun initialise() {
         analogWatchFaceStyle = createWatchFaceStyle()
 
         initializeBackground()

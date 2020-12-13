@@ -17,6 +17,7 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.balsdon.watchapplication.ComplicatedWatchFaceService
 import com.balsdon.watchapplication.R
+import com.balsdon.watchfacerenderer.example.ExampleWatchComplicationRenderer
 import java.util.concurrent.Executors
 
 
@@ -37,27 +38,32 @@ import java.util.concurrent.Executors
  */
 
 /*
-TODO: This is SEVERELY coupled to the [ComplicatedWatchFaceService] class
 I really would like this to be generic, but it is tailored to the specific watch face. This is one
 area I have not really looked into refactoring.
+
+With that said - it is bound to the example and contains watch specific classes and therefore
+needs to stay in the watch project
 */
 
 /**
  * The watch-side config activity for [ComplicatedWatchFaceService], which allows for setting
  * the left and right complications of watch face.
  */
-class ComplicationConfigActivity : Activity(), View.OnClickListener {
+
+class ExampleComplicationConfigActivity : Activity(), View.OnClickListener {
     /**
      * Used by associated watch face ([ComplicatedWatchFaceService]) to let this
      * configuration Activity know which complication locations are supported, their ids, and
      * supported complication data types.
      */
-    enum class ComplicationLocation {
-        LEFT, RIGHT
+
+    enum class ComplicationLocation(val complicationData: ComplicationDataType) {
+        LEFT (ComplicationDataType(ExampleWatchComplicationRenderer.LEFT_COMPLICATION_ID)),
+        RIGHT (ComplicationDataType(ExampleWatchComplicationRenderer.RIGHT_COMPLICATION_ID))
     }
 
-    private var mLeftComplicationId = 0
-    private var mRightComplicationId = 0
+    private val mLeftComplicationId = ExampleWatchComplicationRenderer.LEFT_COMPLICATION_ID
+    private val mRightComplicationId = ExampleWatchComplicationRenderer.RIGHT_COMPLICATION_ID
 
     // Selected complication id by user.
     private var mSelectedComplicationId = 0
@@ -79,10 +85,6 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
         mDefaultAddComplicationDrawable = ContextCompat.getDrawable(this, R.drawable.add_complication)
 
         mSelectedComplicationId = -1
-        mLeftComplicationId =
-            ComplicatedWatchFaceService.getComplicationId(ComplicationLocation.LEFT)
-        mRightComplicationId =
-            ComplicatedWatchFaceService.getComplicationId(ComplicationLocation.RIGHT)
         mWatchFaceComponentName = ComponentName(
             applicationContext,
             ComplicatedWatchFaceService::class.java
@@ -121,8 +123,8 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
         mProviderInfoRetriever!!.release()
     }
 
-    fun retrieveInitialComplicationsData() {
-        val complicationIds: IntArray = ComplicatedWatchFaceService.complicationsList
+    private fun retrieveInitialComplicationsData() {
+        val complicationIds: IntArray = ExampleWatchComplicationRenderer.complicationsList
         mProviderInfoRetriever!!.retrieveProviderInfo(
             object : OnProviderInfoReceivedCallback() {
                 override fun onProviderInfoReceived(
@@ -155,12 +157,10 @@ class ComplicationConfigActivity : Activity(), View.OnClickListener {
     // class, so user can choose their complication data provider.
     private fun launchComplicationHelperActivity(complicationLocation: ComplicationLocation) {
         mSelectedComplicationId =
-            ComplicatedWatchFaceService.getComplicationId(complicationLocation)
+            complicationLocation.complicationData.id
         if (mSelectedComplicationId >= 0) {
             val supportedTypes: IntArray =
-                ComplicatedWatchFaceService.getSupportedComplicationTypes(
-                    complicationLocation
-                )
+                complicationLocation.complicationData.supportedTypes
             startActivityForResult(
                 ComplicationHelperActivity.createProviderChooserHelperIntent(
                     applicationContext,

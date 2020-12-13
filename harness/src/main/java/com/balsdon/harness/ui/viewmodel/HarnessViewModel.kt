@@ -18,6 +18,7 @@ class HarnessViewModel : ViewModel() {
         var isBurnInProtectionToggle: Boolean = false,
         var isAnimateTimeToggle: Boolean = false,
         var isTwentyFourHourMode: Boolean = false,
+        var showComplications: Boolean = false,
         var faceMode: WatchFaceMode = WatchFaceMode.Round,
         var size: Int = DEFAULT_SIZE,
         var speed: Int = DEFAULT_SPEED
@@ -79,6 +80,13 @@ class HarnessViewModel : ViewModel() {
         if (field == value) return
         field = value
         settingsData.value = currentSettings.copy(isTwentyFourHourMode = value)
+    }
+
+    var showComplicationsToggle: Boolean = currentSettings.showComplications
+    set(value) {
+        if (field == value) return
+        field = value
+        settingsData.value = currentSettings.copy(showComplications = value)
     }
 
     var faceMode: WatchFaceMode = currentSettings.faceMode

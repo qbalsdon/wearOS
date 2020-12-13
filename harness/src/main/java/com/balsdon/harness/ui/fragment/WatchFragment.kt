@@ -34,6 +34,7 @@ class WatchFragment : HarnessFragment<FragmentWatchBinding>() {
         binding.watchFace.apply {
             faceMode = settings.faceMode
             size = settings.size
+            showComplications = settings.showComplications
         }
     }
 

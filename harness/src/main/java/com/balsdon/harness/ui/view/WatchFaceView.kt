@@ -2,9 +2,16 @@ package com.balsdon.harness.ui.view
 
 import android.content.Context
 import android.graphics.*
+import android.graphics.drawable.Drawable
+import android.os.Parcelable
 import android.util.AttributeSet
+import android.util.SparseArray
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.applyCanvas
+import com.balsdon.harness.R
+import com.balsdon.watchfacerenderer.WatchComplicationDataSource
+import com.balsdon.watchfacerenderer.WatchComplicationsRenderer
 import com.balsdon.watchfacerenderer.WatchFaceRenderer
 import com.balsdon.watchfacerenderer.WatchScreenSettings
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,6 +21,9 @@ import javax.inject.Inject
 class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     @Inject
     lateinit var watchFaceRenderer: WatchFaceRenderer
+
+    @Inject
+    lateinit var watchComplicationsRenderer: WatchComplicationsRenderer
 
     var currentTime: Long = System.currentTimeMillis()
         set(value) {
@@ -25,11 +35,18 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
         get() = watchFaceRenderer.screenSettings
         set(value) {
             watchFaceRenderer.screenSettings = value
+            watchComplicationsRenderer.screenSettings = value
             field = value
             invalidate()
         }
 
     var faceMode: WatchFaceMode = WatchFaceMode.Round
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    var showComplications: Boolean = false
         set(value) {
             field = value
             invalidate()
@@ -98,7 +115,13 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
             updateDimensions()
         }
         watchFaceRenderer.invalidate = ::invalidate
-        watchFaceRenderer.initStyle()
+        with(watchComplicationsRenderer) {
+            invalidate = ::invalidate
+            dataSource = SimpleWatchFaceDataSource(context)
+        }
+
+        watchFaceRenderer.initialise()
+        watchComplicationsRenderer.initialise()
     }
 
     private fun updateDimensions() {
@@ -106,6 +129,7 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
             lastWidth = width
             lastHeight = height
             watchFaceRenderer.surfaceChanged(lastWidth, lastHeight)
+            watchComplicationsRenderer.surfaceChanged(lastWidth, lastHeight)
             createMaskBitmap()
         }
     }
@@ -113,6 +137,7 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         watchFaceRenderer.surfaceChanged(lastWidth, lastHeight)
+        watchComplicationsRenderer.surfaceChanged(lastWidth, lastHeight)
         createMaskBitmap()
         invalidate()
     }
@@ -140,7 +165,10 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
 
     override fun onDraw(canvas: Canvas?) {
         canvas?.apply {
-            watchFaceRenderer.renderWatchFace(canvas, currentTime)
+            watchFaceRenderer.render(canvas, currentTime)
+            if (showComplications) {
+                watchComplicationsRenderer.render(canvas, currentTime)
+            }
             if (faceMode == WatchFaceMode.Round) {
                 canvas.drawBitmap(mask, 0F, 0F, blackPaint)
             }

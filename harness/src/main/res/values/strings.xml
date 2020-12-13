@@ -16,6 +16,7 @@
     <string name="time_separator">:</string>
     <string name="settings_face_type_round">Round</string>
     <string name="settings_face_type_square">Square</string>
+    <string name="settings_show_complications">Complications</string>
     <string name="am">am</string>
     <string name="pm">pm</string>
 </resources>
