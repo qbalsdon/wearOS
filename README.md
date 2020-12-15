@@ -29,7 +29,8 @@ Feel free to fork this repository and create your own faces.
 1. [Changes from template to basic architecture solution][PULL1]
 1. [Move WatchFaceRenderer and example into separate module][PULL2]
 1. [Created a test harness with more granular controls][PULL3]
-1. Create a build variant to demonstrate utility
+~1. Create a build variant to demonstrate utility~
+1. [Add complications][PULL5]
 
 ### Tasks
 |TYPE|EPIC|TASK|DESCRIPTION|STATUS|
@@ -62,8 +63,10 @@ Feel free to fork this repository and create your own faces.
 | TASK | Watch Face App | Watch Face | Remove the Handler in the engine | :ballot_box_with_check: |
 | TASK | Project | General | Update to [ViewBinding][VIEWBINDING] | :ballot_box_with_check: |
 | BUG | Harness | View | Calendar not showing / hiding | :ballot_box_with_check: |
+| TASK | Watch Face App | Watch Face | Watch face event handling | :pushpin: |
 | TASK | Watch Face App | Watch Face | Complications event handling | :pushpin: |
-| TASK | Watch Face App | Harness | Complications placeholder rendering on harness | :pushpin: |
+| TASK | Watch Face App | Complications Provider | [Complications provider example][COMPLICATIONCODELAB] | :pushpin: |
+| TASK | Watch Face App | Harness | Complications placeholder rendering on harness | :ballot_box_with_check: |
 | TASK | Harness | View | Go back in time option? | :pushpin: |
 
 [WALLPAPER]: https://developer.android.com/reference/android/service/wallpaper/WallpaperService
@@ -73,6 +76,7 @@ Feel free to fork this repository and create your own faces.
 [PULL1]: https://github.com/qbalsdon/wearOS/pull/1
 [PULL2]: https://github.com/qbalsdon/wearOS/pull/2
 [PULL3]: https://github.com/qbalsdon/wearOS/pull/4
+[PULL5]: https://github.com/qbalsdon/wearOS/pull/5
 [SIDESHEET]: https://material.io/components/sheets-side#specs
 [MOTIONLAYOUT]: https://developer.android.com/training/constraint-layout/motionlayout
 [HILT2]: https://dagger.dev/hilt/
@@ -81,3 +85,4 @@ Feel free to fork this repository and create your own faces.
 [HANDLERISSUE]: https://github.com/android/wear-os-samples/issues/45
 [VIEWBINDING]: https://developer.android.com/topic/libraries/view-binding
 [CODELAB]: https://developer.android.com/codelabs/watchface#0
+[COMPLICATIONCODELAB]: https://developer.android.com/codelabs/data-providers#0
