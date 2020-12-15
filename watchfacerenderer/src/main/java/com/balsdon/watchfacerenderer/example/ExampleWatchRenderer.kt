@@ -48,7 +48,7 @@ class ExampleWatchRenderer(resources: Resources? = null) : WatchFaceRenderer(res
         mBackgroundBitmap = BitmapFactory.decodeResource(resources, R.drawable.watchface_service_bg)
     }
 
-    override fun initStyle() {
+    override fun initialise() {
         mBackgroundPaint = Paint().apply {
             color = Color.BLACK
         }

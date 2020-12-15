@@ -55,14 +55,14 @@
 
     <RadioGroup
         android:id="@+id/faceType"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/startMargin"
         android:layout_marginRight="@dimen/startMargin"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/showComplicationsToggle"
         app:layout_constraintTop_toBottomOf="@id/burnInProtectionToggle"
         >
         <RadioButton
@@ -81,6 +81,20 @@
             android:text="@string/settings_face_type_square"
             />
     </RadioGroup>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/showComplicationsToggle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/startMargin"
+        android:layout_marginEnd="@dimen/startMargin"
+        android:text="@string/settings_show_complications"
+
+        app:layout_constraintLeft_toRightOf="@id/faceType"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/faceType"
+        app:layout_constraintBottom_toBottomOf="@id/faceType"
+        />
 
     <LinearLayout
         android:id="@+id/sizeContainer"
