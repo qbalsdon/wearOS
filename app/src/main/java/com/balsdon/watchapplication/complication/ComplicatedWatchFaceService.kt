@@ -1,11 +1,11 @@
-package com.balsdon.watchapplication
+package com.balsdon.watchapplication.complication
 
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.support.wearable.complications.ComplicationData
 import android.view.SurfaceHolder
 import com.balsdon.watchapplication.service.WatchFaceService
-import com.balsdon.watchfacerenderer.WatchComplicationDataSource
+import com.balsdon.watchfacerenderer.ComplicationDataSource
 import com.balsdon.watchfacerenderer.WatchComplicationsRenderer
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -22,18 +22,18 @@ import javax.inject.Inject
 class ComplicatedWatchFaceService : WatchFaceService() {
     @Inject
     lateinit var watchComplicationsRenderer: WatchComplicationsRenderer
-    @Inject
-    lateinit var watchComplicationsDataSource: WatchComplicationDataSource
+
+    private val complicationsDataSource: ComplicationDataSource =
+        WatchComplicationDataSource()
 
     override fun engineCreated() {
         super.engineCreated()
-        //watchComplicationsDataSource = ExampleComplicationDataSource(this, watchComplicationsRenderer)
-        watchComplicationsDataSource.initialise(watchComplicationsRenderer.complicationIdList)
 
         watchComplicationsRenderer.apply {
             invalidate = engine::invalidate
-            dataSource = watchComplicationsDataSource
+            dataSource = complicationsDataSource
             engine.setActiveComplications(*complicationIdList)
+            initialise()
         }
     }
 
@@ -50,9 +50,10 @@ class ComplicatedWatchFaceService : WatchFaceService() {
         super.updateAmbientMode(inAmbientMode)
 
         if (watchComplicationsRenderer.screenSettings.isAmbientMode != inAmbientMode) {
-            watchComplicationsRenderer.screenSettings = watchComplicationsRenderer.screenSettings.copy(
-                isAmbientMode = inAmbientMode
-            )
+            watchComplicationsRenderer.screenSettings =
+                watchComplicationsRenderer.screenSettings.copy(
+                    isAmbientMode = inAmbientMode
+                )
         }
     }
 
@@ -68,7 +69,7 @@ class ComplicatedWatchFaceService : WatchFaceService() {
 
     override fun updateComplications(watchFaceComplicationId: Int, data: ComplicationData?) {
         super.updateComplications(watchFaceComplicationId, data)
-        watchComplicationsDataSource.updateComplication(watchFaceComplicationId, data)
+        complicationsDataSource.updateComplication(watchFaceComplicationId, data)
         engine.invalidate()
     }
 }

@@ -2,15 +2,9 @@ package com.balsdon.harness.ui.view
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.Drawable
-import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.SparseArray
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.applyCanvas
-import com.balsdon.harness.R
-import com.balsdon.watchfacerenderer.WatchComplicationDataSource
 import com.balsdon.watchfacerenderer.WatchComplicationsRenderer
 import com.balsdon.watchfacerenderer.WatchFaceRenderer
 import com.balsdon.watchfacerenderer.WatchScreenSettings
@@ -117,7 +111,7 @@ class WatchFaceView(context: Context, attrs: AttributeSet) : View(context, attrs
         watchFaceRenderer.invalidate = ::invalidate
         with(watchComplicationsRenderer) {
             invalidate = ::invalidate
-            dataSource = SimpleWatchFaceDataSource(context)
+            dataSource = DrawableComplicationDataSource()
         }
 
         watchFaceRenderer.initialise()

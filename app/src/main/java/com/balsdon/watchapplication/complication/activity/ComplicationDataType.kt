@@ -1,4 +1,4 @@
-package com.balsdon.watchapplication.activity
+package com.balsdon.watchapplication.complication.activity
 
 import android.support.wearable.complications.ComplicationData
 

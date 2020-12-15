@@ -38,8 +38,16 @@ private const val INTERACTIVE_UPDATE_RATE_MS = 1000
  * in the Google Watch Face Code Lab:
  * https://codelabs.developers.google.com/codelabs/watchface/index.html#0
  */
+interface WatchFaceEngineHandler {
+    fun engineCreated()
+    fun updateProperties(lowBitAmbientStatus: Boolean, isBurnInProtectionMode: Boolean)
+    fun updateAmbientMode(inAmbientMode: Boolean)
+    fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int)
+    fun render(canvas: Canvas, bounds: Rect?, time: Long)
+    fun updateComplications(watchFaceComplicationId: Int, data: ComplicationData?)
+}
 
-abstract class WatchFaceService : CanvasWatchFaceService() {
+abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandler {
     @Inject
     lateinit var watchFaceRenderer: WatchFaceRenderer
 
@@ -50,21 +58,21 @@ abstract class WatchFaceService : CanvasWatchFaceService() {
         return engine
     }
 
-    open fun engineCreated() {
+    override fun engineCreated() {
         with(engine.faceRenderer) {
             invalidate = engine::invalidate
             initialise()
         }
     }
 
-    open fun updateProperties(lowBitAmbientStatus: Boolean, isBurnInProtectionMode: Boolean) {
+    override fun updateProperties(lowBitAmbientStatus: Boolean, isBurnInProtectionMode: Boolean) {
         engine.faceRenderer.screenSettings = engine.faceRenderer.screenSettings.copy(
             isLowBitAmbient = lowBitAmbientStatus,
             isBurnInProtection = isBurnInProtectionMode
         )
     }
 
-    open fun updateAmbientMode(inAmbientMode: Boolean) {
+    override fun updateAmbientMode(inAmbientMode: Boolean) {
         if (engine.faceRenderer.screenSettings.isAmbientMode != inAmbientMode) {
             engine.faceRenderer.screenSettings = engine.faceRenderer.screenSettings.copy(
                 isAmbientMode = inAmbientMode
@@ -72,15 +80,15 @@ abstract class WatchFaceService : CanvasWatchFaceService() {
         }
     }
 
-    open fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
         engine.faceRenderer.surfaceChanged(width, height)
     }
 
-    open fun render(canvas: Canvas, bounds: Rect?, time: Long) {
+    override fun render(canvas: Canvas, bounds: Rect?, time: Long) {
         engine.faceRenderer.render(canvas, time)
     }
 
-    open fun updateComplications(watchFaceComplicationId: Int, data: ComplicationData?) = Unit
+    override fun updateComplications(watchFaceComplicationId: Int, data: ComplicationData?) = Unit
 
     inner class WatchFaceEngine(val faceRenderer: WatchFaceRenderer) :
         CanvasWatchFaceService.Engine(), TimeUpdateHandler {
@@ -113,8 +121,10 @@ abstract class WatchFaceService : CanvasWatchFaceService() {
 
         override fun onPropertiesChanged(properties: Bundle) {
             super.onPropertiesChanged(properties)
-            val lowBitAmbientStatus = properties.getBoolean(WatchFaceService.PROPERTY_LOW_BIT_AMBIENT, false)
-            val isBurnInProtectionMode = properties.getBoolean(WatchFaceService.PROPERTY_BURN_IN_PROTECTION, false)
+            val lowBitAmbientStatus =
+                properties.getBoolean(WatchFaceService.PROPERTY_LOW_BIT_AMBIENT, false)
+            val isBurnInProtectionMode =
+                properties.getBoolean(WatchFaceService.PROPERTY_BURN_IN_PROTECTION, false)
             updateProperties(lowBitAmbientStatus, isBurnInProtectionMode)
         }
 
@@ -190,7 +200,10 @@ abstract class WatchFaceService : CanvasWatchFaceService() {
             updateTimer()
         }
 
-        override fun onComplicationDataUpdate(watchFaceComplicationId: Int, data: ComplicationData?) {
+        override fun onComplicationDataUpdate(
+            watchFaceComplicationId: Int,
+            data: ComplicationData?
+        ) {
             updateComplications(watchFaceComplicationId, data)
         }
 

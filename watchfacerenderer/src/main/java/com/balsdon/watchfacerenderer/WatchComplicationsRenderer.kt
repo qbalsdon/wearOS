@@ -1,22 +1,18 @@
 package com.balsdon.watchfacerenderer
 
+import android.content.Context
 import android.graphics.Canvas
-import android.graphics.drawable.Drawable
-import android.os.Parcel
-import android.os.Parcelable
-import android.util.SparseArray
 
-abstract class WatchComplicationsRenderer : WatchFaceRenderable() {
+abstract class WatchComplicationsRenderer(val context: Context) : WatchFaceRenderable() {
     abstract val complicationIdList: IntArray
-    var dataSource: WatchComplicationDataSource? = null
+    lateinit var dataSource: ComplicationDataSource
 
     override fun render(canvas: Canvas, time: Long) {
         currentTime.timeInMillis = time
-        drawComplications(canvas)
+        dataSource.drawComplications(canvas, currentTime.timeInMillis)
     }
 
-    abstract fun drawComplications(canvas: Canvas)
     override fun initialise() {
-        dataSource?.initialise(complicationIdList)
+        dataSource.initialise(context, complicationIdList)
     }
 }

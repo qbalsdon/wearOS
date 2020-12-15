@@ -1,5 +1,6 @@
 package com.balsdon.watchfacerenderer
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Parcelable
@@ -12,13 +13,14 @@ import android.util.SparseArray
  * to deal in real data.
  *
  * TODO: Make the data source use a generic
+ *
  */
 
-interface WatchComplicationDataSource {
+interface ComplicationDataSource {
     val activeComplicationDataList: SparseArray<Parcelable>
     val complicationDrawableList: SparseArray<Drawable>
-    fun drawComplication(drawable: Drawable, canvas: Canvas, time: Long)
+    fun drawComplications(canvas: Canvas, time: Long)
     fun updateComplication(complicationId: Int, data: Parcelable?)
     fun updateStyle(screenSettings: WatchScreenSettings)
-    fun initialise(keys: IntArray)
+    fun initialise(context: Context, keys: IntArray)
 }

@@ -1,12 +1,13 @@
 package com.balsdon.watchfacerenderer.example
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.util.Log
 import androidx.core.util.forEach
 import com.balsdon.watchfacerenderer.WatchComplicationsRenderer
 
-class ExampleWatchComplicationRenderer: WatchComplicationsRenderer() {
+class ExampleWatchComplicationRenderer(context: Context) : WatchComplicationsRenderer(context) {
     companion object {
         const val LEFT_COMPLICATION_ID = 0
         const val RIGHT_COMPLICATION_ID = 1
@@ -16,13 +17,12 @@ class ExampleWatchComplicationRenderer: WatchComplicationsRenderer() {
             RIGHT_COMPLICATION_ID
         )
     }
-
-    private val tag: String get() = this.javaClass.simpleName
+    
     override val complicationIdList: IntArray
         get() = complicationsList
 
     override fun updateStyle() {
-        dataSource?.updateStyle(screenSettings)
+        dataSource.updateStyle(screenSettings)
     }
 
     override fun surfaceChanged(width: Int, height: Int) {
@@ -48,24 +48,11 @@ class ExampleWatchComplicationRenderer: WatchComplicationsRenderer() {
                 verticalOffset + sizeOfComplication
             )
 
-        dataSource
-            ?.complicationDrawableList
-            ?.get(LEFT_COMPLICATION_ID)
-            ?.bounds = leftBounds
-
-        dataSource
-            ?.complicationDrawableList
-            ?.get(RIGHT_COMPLICATION_ID)
-            ?.bounds = rightBounds
-    }
-
-    override fun drawComplications(canvas: Canvas) {
-        if (dataSource == null) Log.e(tag,"$tag has null 'dataSource' reference")
-
-        dataSource?.apply {
-            complicationDrawableList.forEach { _, drawable ->
-                drawComplication(drawable, canvas, currentTime.timeInMillis)
-            }
+        dataSource.complicationDrawableList.apply {
+            get(LEFT_COMPLICATION_ID)
+                .bounds = leftBounds
+            get(RIGHT_COMPLICATION_ID)
+                .bounds = rightBounds
         }
     }
 }

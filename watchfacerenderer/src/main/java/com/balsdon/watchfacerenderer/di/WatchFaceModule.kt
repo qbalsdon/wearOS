@@ -1,12 +1,10 @@
 package com.balsdon.watchfacerenderer.di
 
 import android.content.Context
-import com.balsdon.watchfacerenderer.WatchComplicationDataSource
 import com.balsdon.watchfacerenderer.WatchComplicationsRenderer
 import com.balsdon.watchfacerenderer.WatchFaceRenderer
 import com.balsdon.watchfacerenderer.example.ExampleWatchComplicationRenderer
 import com.balsdon.watchfacerenderer.example.ExampleWatchRenderer
-import com.balsdon.watchfacerenderer.example.dsl.AnalogDslWatchFace
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +19,6 @@ object WatchFaceModule {
     fun provideWatchFaceRenderer(@ApplicationContext context: Context): WatchFaceRenderer
             = ExampleWatchRenderer(context.resources)
     @Provides
-    fun provideWatchComplicationsRenderer(): WatchComplicationsRenderer
-            = ExampleWatchComplicationRenderer()
+    fun provideWatchComplicationsRenderer(@ApplicationContext context: Context): WatchComplicationsRenderer
+            = ExampleWatchComplicationRenderer(context)
 }

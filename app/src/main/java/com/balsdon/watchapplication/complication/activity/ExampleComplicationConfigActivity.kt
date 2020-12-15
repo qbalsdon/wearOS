@@ -1,4 +1,4 @@
-package com.balsdon.watchapplication.activity
+package com.balsdon.watchapplication.complication.activity
 
 import android.app.Activity
 import android.content.ComponentName
@@ -15,7 +15,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import com.balsdon.watchapplication.ComplicatedWatchFaceService
+import com.balsdon.watchapplication.complication.ComplicatedWatchFaceService
 import com.balsdon.watchapplication.R
 import com.balsdon.watchfacerenderer.example.ExampleWatchComplicationRenderer
 import java.util.concurrent.Executors
@@ -223,7 +223,7 @@ class ExampleComplicationConfigActivity : Activity(), View.OnClickListener {
     }
 
     companion object {
-        private const val TAG = "ConfigActivity"
+        private const val TAG = "ExampleComplicationConfigActivity"
         const val COMPLICATION_CONFIG_REQUEST_CODE = 1001
     }
 }
