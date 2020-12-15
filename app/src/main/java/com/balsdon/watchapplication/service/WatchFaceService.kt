@@ -38,14 +38,6 @@ private const val INTERACTIVE_UPDATE_RATE_MS = 1000
  * in the Google Watch Face Code Lab:
  * https://codelabs.developers.google.com/codelabs/watchface/index.html#0
  */
-interface WatchFaceEngineHandler {
-    fun engineCreated()
-    fun updateProperties(lowBitAmbientStatus: Boolean, isBurnInProtectionMode: Boolean)
-    fun updateAmbientMode(inAmbientMode: Boolean)
-    fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int)
-    fun render(canvas: Canvas, bounds: Rect?, time: Long)
-    fun updateComplications(watchFaceComplicationId: Int, data: ComplicationData?)
-}
 
 abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandler {
     @Inject
