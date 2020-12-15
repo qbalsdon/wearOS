@@ -15,7 +15,7 @@ import android.view.SurfaceHolder
  * class demonstrates that the collection of the display proprties should be grouped together
  * rather than relying on [WatchFaceEngine.onPropertiesChanged] and
  * [WatchFaceEngine.onAmbientModeChanged] distinctly. However it must be noted that Ambient mode is
- * new to the Wathc API and Watch Faces are a hack on Android WallPapers. That's why they're
+ * new to the Watch API and Watch Faces are a hack on Android WallPapers. That's why they're
  * distinct.
  */
 interface WatchFaceEngineHandler {
