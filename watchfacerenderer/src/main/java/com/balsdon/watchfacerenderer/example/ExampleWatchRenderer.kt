@@ -260,7 +260,7 @@ class ExampleWatchRenderer(resources: Resources? = null) : WatchFaceRenderer(res
          * 360 / 60 = 6 and 360 / 12 = 30.
          */
         val seconds =
-            currentTime.get(Calendar.SECOND) + currentTime.get(Calendar.MILLISECOND) / 1000f
+            currentTime.get(Calendar.SECOND) 
         val secondsRotation = seconds * 6f
 
         val minutesRotation = currentTime.get(Calendar.MINUTE) * 6f
