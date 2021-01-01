@@ -14,17 +14,10 @@ import android.support.wearable.watchface.WatchFaceStyle
 import android.view.SurfaceHolder
 import android.widget.Toast
 import com.balsdon.watchapplication.R
-import com.balsdon.watchapplication.service.EngineHandler.Companion.MSG_UPDATE_TIME
+import com.balsdon.watchapplication.service.InteractiveTimeUpdateHandler.Companion.MSG_UPDATE_TIME
 import com.balsdon.watchfacerenderer.WatchFaceRenderer
 import java.util.*
 import javax.inject.Inject
-
-/**
- * Updates rate in milliseconds for interactive mode. We update once a second to advance the
- * second hand.
- */
-private const val INTERACTIVE_UPDATE_RATE_MS = 1000
-
 /**
  * Analog watch face with a ticking second hand. In ambient mode, the second hand isn"t
  * shown. On devices with low-bit ambient mode, the hands are drawn without anti-aliasing in ambient
@@ -99,11 +92,11 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
     //endregion
 
     inner class WatchFaceEngine(private val watchFaceEngineHandler: WatchFaceEngineHandler) :
-        CanvasWatchFaceService.Engine(), TimeUpdateHandler {
+        CanvasWatchFaceService.Engine(), Updateable {
         private var hasRegisteredTimeZoneReceiver = false
 
         /* Handler to update the time once a second in interactive mode. */
-        private val updateTimeHandler = EngineHandler(this)
+        private val updateTimeHandler = InteractiveTimeUpdateHandler(this)
 
         private val timeZoneReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
@@ -229,7 +222,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
         }
 
         /**
-         * Starts/stops the [.mUpdateTimeHandler] timer based on the state of the watch face.
+         * Starts/stops the [updateTimeHandler] timer based on the state of the watch face.
          */
         private fun updateTimer() {
             updateTimeHandler.removeMessages(MSG_UPDATE_TIME)
@@ -239,7 +232,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
         }
 
         /**
-         * Returns whether the [.mUpdateTimeHandler] timer should be running. The timer
+         * Returns whether the [updateTimeHandler] timer should be running. The timer
          * should only run in active mode.
          */
         private fun shouldTimerBeRunning(): Boolean {
@@ -249,13 +242,21 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
         /**
          * Handle updating the time periodically in interactive mode.
          */
-        override fun handleUpdateTimeMessage() {
+        override fun update() {
             invalidate()
             if (shouldTimerBeRunning()) {
                 val timeMs = System.currentTimeMillis()
-                val delayMs = INTERACTIVE_UPDATE_RATE_MS - timeMs % INTERACTIVE_UPDATE_RATE_MS
+                val delayMs = Companion.INTERACTIVE_UPDATE_RATE_MS - timeMs % Companion.INTERACTIVE_UPDATE_RATE_MS
                 updateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs)
             }
         }
+    }
+
+    companion object {
+        /**
+         * Updates rate in milliseconds for interactive mode. We update once a second to advance the
+         * second hand.
+         */
+        private const val INTERACTIVE_UPDATE_RATE_MS = 1000
     }
 }
