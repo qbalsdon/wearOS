@@ -26,9 +26,9 @@ class WatchFragment : HarnessFragment<FragmentWatchBinding>() {
     override fun settingsUpdated(settings: HarnessViewModel.WatchDisplaySettings) {
         binding.watchFace.screenSettings.apply {
             isAmbientMode = settings.isAmbientMode
-            isMuteMode = settings.isAmbientMode
-            isLowBitAmbient = settings.isMuteModeToggle
-            isBurnInProtection = settings.isLowBitAmbientToggle
+            isMuteMode = settings.isMuteModeToggle
+            isLowBitAmbient = settings.isLowBitAmbientToggle
+            isBurnInProtection = settings.isBurnInProtectionToggle
             isTwentyFourHour = settings.isTwentyFourHourMode
         }
         binding.watchFace.apply {
