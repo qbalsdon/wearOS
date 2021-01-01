@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.support.wearable.complications.ComplicationData
 import android.view.SurfaceHolder
+import java.util.*
 
 /**
  * [CanvasWatchFaceService] has an annoying inner class [CanvasWatchFaceService.Engine] that
@@ -19,10 +20,15 @@ import android.view.SurfaceHolder
  * distinct.
  */
 interface WatchFaceEngineHandler {
+    val inAmbientMode: Boolean
+
     fun engineCreated()
     fun updateProperties(lowBitAmbientStatus: Boolean, isBurnInProtectionMode: Boolean)
     fun updateAmbientMode(inAmbientMode: Boolean)
+    fun updateMuteMode(inMuteMode: Boolean)
     fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int)
     fun render(canvas: Canvas, bounds: Rect?, time: Long)
     fun updateComplications(watchFaceComplicationId: Int, data: ComplicationData?)
+    fun setTimeZone(timeZone: TimeZone)
 }
+

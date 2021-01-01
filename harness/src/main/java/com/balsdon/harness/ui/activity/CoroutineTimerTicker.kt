@@ -35,7 +35,7 @@ class CoroutineTimerTicker(private val scope: CoroutineScope): TimeTicker {
     override fun stopTick() =
         tickJob.cancel()
 
-    private  fun startTick() {
+    private fun startTick() {
         tickJob = scope.launch {
             withContext(Dispatchers.IO) {
                 tick()

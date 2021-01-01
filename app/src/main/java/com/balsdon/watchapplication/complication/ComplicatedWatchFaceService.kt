@@ -8,6 +8,7 @@ import com.balsdon.watchapplication.service.WatchFaceService
 import com.balsdon.watchfacerenderer.ComplicationDataSource
 import com.balsdon.watchfacerenderer.WatchComplicationsRenderer
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
 
@@ -35,6 +36,11 @@ class ComplicatedWatchFaceService : WatchFaceService() {
             engine.setActiveComplications(*complicationIdList)
             initialise()
         }
+    }
+
+    override fun setTimeZone(timeZone: TimeZone) {
+        super.setTimeZone(timeZone)
+        watchComplicationsRenderer.setTimeZone(timeZone)
     }
 
     override fun updateProperties(lowBitAmbientStatus: Boolean, isBurnInProtectionMode: Boolean) {

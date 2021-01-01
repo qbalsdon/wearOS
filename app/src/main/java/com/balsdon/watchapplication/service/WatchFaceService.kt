@@ -42,47 +42,63 @@ private const val INTERACTIVE_UPDATE_RATE_MS = 1000
 abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandler {
     @Inject
     lateinit var watchFaceRenderer: WatchFaceRenderer
-
     lateinit var engine: WatchFaceEngine
 
     override fun onCreateEngine(): WatchFaceEngine {
-        engine = WatchFaceEngine(watchFaceRenderer)
+        engine = WatchFaceEngine(this)
         return engine
     }
 
+    //region WatchFaceEngineHandler
+    override val inAmbientMode: Boolean
+        get() = watchFaceRenderer.screenSettings.isAmbientMode
+
     override fun engineCreated() {
-        with(engine.faceRenderer) {
+        with(watchFaceRenderer) {
             invalidate = engine::invalidate
             initialise()
         }
     }
 
-    override fun updateProperties(lowBitAmbientStatus: Boolean, isBurnInProtectionMode: Boolean) {
-        engine.faceRenderer.screenSettings = engine.faceRenderer.screenSettings.copy(
-            isLowBitAmbient = lowBitAmbientStatus,
-            isBurnInProtection = isBurnInProtectionMode
-        )
-    }
-
-    override fun updateAmbientMode(inAmbientMode: Boolean) {
-        if (engine.faceRenderer.screenSettings.isAmbientMode != inAmbientMode) {
-            engine.faceRenderer.screenSettings = engine.faceRenderer.screenSettings.copy(
-                isAmbientMode = inAmbientMode
+    override fun updateProperties(lowBitAmbientStatus: Boolean, isBurnInProtectionMode: Boolean) =
+        with(watchFaceRenderer) {
+            screenSettings = watchFaceRenderer.screenSettings.copy(
+                isLowBitAmbient = lowBitAmbientStatus,
+                isBurnInProtection = isBurnInProtectionMode
             )
         }
-    }
 
-    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
-        engine.faceRenderer.surfaceChanged(width, height)
-    }
+    override fun updateAmbientMode(inAmbientMode: Boolean) =
+        with(watchFaceRenderer.screenSettings) {
+            if (isAmbientMode != inAmbientMode) {
+                watchFaceRenderer.screenSettings = watchFaceRenderer.screenSettings.copy(
+                    isAmbientMode = inAmbientMode
+                )
+            }
+        }
 
-    override fun render(canvas: Canvas, bounds: Rect?, time: Long) {
-        engine.faceRenderer.render(canvas, time)
-    }
+    override fun updateMuteMode(inMuteMode: Boolean) =
+        with(watchFaceRenderer) {
+            if (screenSettings.isMuteMode != inMuteMode) {
+                screenSettings = screenSettings.copy(
+                    isMuteMode = inMuteMode
+                )
+            }
+        }
+
+    override fun setTimeZone(timeZone: TimeZone) =
+        watchFaceRenderer.setTimeZone(timeZone)
+
+    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) =
+        watchFaceRenderer.surfaceChanged(width, height)
+
+    override fun render(canvas: Canvas, bounds: Rect?, time: Long) =
+        watchFaceRenderer.render(canvas, time)
 
     override fun updateComplications(watchFaceComplicationId: Int, data: ComplicationData?) = Unit
+    //endregion
 
-    inner class WatchFaceEngine(val faceRenderer: WatchFaceRenderer) :
+    inner class WatchFaceEngine(private val watchFaceEngineHandler: WatchFaceEngineHandler) :
         CanvasWatchFaceService.Engine(), TimeUpdateHandler {
         private var hasRegisteredTimeZoneReceiver = false
 
@@ -91,7 +107,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
 
         private val timeZoneReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-                faceRenderer.setTimeZone(TimeZone.getDefault())
+                watchFaceEngineHandler.setTimeZone(TimeZone.getDefault())
             }
         }
 
@@ -103,7 +119,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
                     .build()
             )
 
-            engineCreated()
+            watchFaceEngineHandler.engineCreated()
         }
 
         override fun onDestroy() {
@@ -117,7 +133,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
                 properties.getBoolean(WatchFaceService.PROPERTY_LOW_BIT_AMBIENT, false)
             val isBurnInProtectionMode =
                 properties.getBoolean(WatchFaceService.PROPERTY_BURN_IN_PROTECTION, false)
-            updateProperties(lowBitAmbientStatus, isBurnInProtectionMode)
+            watchFaceEngineHandler.updateProperties(lowBitAmbientStatus, isBurnInProtectionMode)
         }
 
         override fun onTimeTick() {
@@ -127,7 +143,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
 
         override fun onAmbientModeChanged(inAmbientMode: Boolean) {
             super.onAmbientModeChanged(inAmbientMode)
-            updateAmbientMode(inAmbientMode)
+            watchFaceEngineHandler.updateAmbientMode(inAmbientMode)
             // Check and trigger whether or not timer should be running (only
             // in active mode).
             updateTimer()
@@ -138,16 +154,12 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
             val inMuteMode = interruptionFilter == WatchFaceService.INTERRUPTION_FILTER_NONE
 
             /* Dim display in mute mode. */
-            if (faceRenderer.screenSettings.isMuteMode != inMuteMode) {
-                faceRenderer.screenSettings = faceRenderer.screenSettings.copy(
-                    isMuteMode = inMuteMode
-                )
-            }
+            watchFaceEngineHandler.updateMuteMode(inMuteMode)
         }
 
         override fun onSurfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
             super.onSurfaceChanged(holder, format, width, height)
-            surfaceChanged(holder, format, width, height)
+            watchFaceEngineHandler.surfaceChanged(holder, format, width, height)
         }
 
         /**
@@ -173,7 +185,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
 
         override fun onDraw(canvas: Canvas, bounds: Rect) {
             val now = System.currentTimeMillis()
-            render(canvas, bounds, now)
+            watchFaceEngineHandler.render(canvas, bounds, now)
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
@@ -182,7 +194,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
             if (visible) {
                 registerReceiver()
                 /* Update time zone in case it changed while we weren"t visible. */
-                faceRenderer.setTimeZone(TimeZone.getDefault())
+                watchFaceEngineHandler.setTimeZone(TimeZone.getDefault())
                 invalidate()
             } else {
                 unregisterReceiver()
@@ -231,7 +243,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
          * should only run in active mode.
          */
         private fun shouldTimerBeRunning(): Boolean {
-            return isVisible && !faceRenderer.screenSettings.isAmbientMode
+            return isVisible && !watchFaceEngineHandler.inAmbientMode
         }
 
         /**
