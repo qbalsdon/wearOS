@@ -15,8 +15,8 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import com.balsdon.watchapplication.complication.ComplicatedWatchFaceService
 import com.balsdon.watchapplication.R
+import com.balsdon.watchapplication.complication.ComplicatedWatchFaceService
 import com.balsdon.watchfacerenderer.example.ExampleWatchComplicationRenderer
 import java.util.concurrent.Executors
 

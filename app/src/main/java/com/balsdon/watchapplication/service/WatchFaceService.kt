@@ -186,7 +186,7 @@ abstract class WatchFaceService : CanvasWatchFaceService(), WatchFaceEngineHandl
 
             if (visible) {
                 registerReceiver()
-                /* Update time zone in case it changed while we weren"t visible. */
+                /* Update time zone in case it changed while we weren't visible. */
                 watchFaceEngineHandler.setTimeZone(TimeZone.getDefault())
                 invalidate()
             } else {
