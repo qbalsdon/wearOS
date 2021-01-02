@@ -2,6 +2,7 @@ package com.balsdon.harness.ui.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Parcelable
 import android.util.SparseArray
@@ -34,12 +35,11 @@ class DrawableComplicationDataSource : ComplicationDataSource {
 
     override fun updateComplication(complicationId: Int, data: Parcelable?) = Unit
 
-    override fun updateStyle(screenSettings: WatchScreenSettings) {
-        //TODO: Change drawable based on settings
-        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_complication_placeholder)!!
-
-        complicationDrawableList.forEach { key, _ ->
-            complicationDrawableList.put(key, drawable)
-        }
-    }
+    /**
+     * TODO: Update the drawables based on screen settings
+     * WARNING: Maintain the drawable.bounds as this is only called on surface changed
+     * I have found that when I change the drawables in the complicationDrawableList
+     * the bounds get confused and both drawables get rendered on the same point
+     */
+    override fun updateStyle(screenSettings: WatchScreenSettings) = Unit
 }

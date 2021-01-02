@@ -12,7 +12,7 @@ class CoroutineTimerTicker(private val scope: CoroutineScope): TimeTicker {
     private var tickSpeed: Int = DEFAULT_TICK_SPEED
 
     override fun setTickSpeed(speed: Int) {
-        tickJob.cancel() // Race condition div by 0
+        tickJob.cancel()
         tickSpeed = speed
         if (tickSpeed > 0) {
             startTick()
@@ -23,22 +23,14 @@ class CoroutineTimerTicker(private val scope: CoroutineScope): TimeTicker {
         timeHandler = handler
     }
 
-    private suspend fun tick() {
-        while(true) {
-            withContext(Dispatchers.Main) {
-                timeHandler?.increaseTime()
-            }
-            delay(1000L / tickSpeed)
-        }
-    }
-
     override fun stopTick() =
         tickJob.cancel()
 
     private fun startTick() {
         tickJob = scope.launch {
-            withContext(Dispatchers.IO) {
-                tick()
+            while (isActive) {
+                timeHandler?.increaseTime()
+                delay(1000L / tickSpeed)
             }
         }
     }

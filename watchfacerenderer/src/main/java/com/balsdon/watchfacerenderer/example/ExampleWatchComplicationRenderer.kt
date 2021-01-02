@@ -1,10 +1,7 @@
 package com.balsdon.watchfacerenderer.example
 
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Rect
-import android.util.Log
-import androidx.core.util.forEach
 import com.balsdon.watchfacerenderer.WatchComplicationsRenderer
 
 class ExampleWatchComplicationRenderer(context: Context) : WatchComplicationsRenderer(context) {

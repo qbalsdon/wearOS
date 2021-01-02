@@ -9,7 +9,9 @@ abstract class WatchComplicationsRenderer(val context: Context) : WatchFaceRende
 
     override fun render(canvas: Canvas, time: Long) {
         currentTime.timeInMillis = time
-        dataSource.drawComplications(canvas, currentTime.timeInMillis)
+        if (!screenSettings.isMuteMode) {
+            dataSource.drawComplications(canvas, currentTime.timeInMillis)
+        }
     }
 
     override fun initialise() {

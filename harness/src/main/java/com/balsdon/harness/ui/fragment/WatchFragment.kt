@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.balsdon.harness.databinding.FragmentWatchBinding
 import com.balsdon.harness.ui.viewmodel.HarnessViewModel
+import com.balsdon.watchfacerenderer.WatchScreenSettings
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,13 +25,13 @@ class WatchFragment : HarnessFragment<FragmentWatchBinding>() {
     }
 
     override fun settingsUpdated(settings: HarnessViewModel.WatchDisplaySettings) {
-        binding.watchFace.screenSettings.apply {
-            isAmbientMode = settings.isAmbientMode
-            isMuteMode = settings.isMuteModeToggle
-            isLowBitAmbient = settings.isLowBitAmbientToggle
-            isBurnInProtection = settings.isBurnInProtectionToggle
+        binding.watchFace.screenSettings = WatchScreenSettings(
+            isAmbientMode = settings.isAmbientMode,
+            isMuteMode = settings.isMuteModeToggle,
+            isLowBitAmbient = settings.isLowBitAmbientToggle,
+            isBurnInProtection = settings.isBurnInProtectionToggle,
             isTwentyFourHour = settings.isTwentyFourHourMode
-        }
+        )
         binding.watchFace.apply {
             faceMode = settings.faceMode
             size = settings.size
