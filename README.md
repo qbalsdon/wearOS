@@ -1,3 +1,11 @@
+# REPOSITORY DEPRECATED
+
+This repository will no longer be maintained. There are new androidx libraries at play that simplify the structure of watch face apps and would make a lot of the interfaces and injection unecessary. The update can be read on the Google Developers Blog: https://android-developers.googleblog.com/2021/12/develop-watch-faces-with-stable-jetpack.html
+
+If you want more control over the watch faces you create you can also check out Samsung's Watch Face Studio: https://developer.android.com/training/wearables/wfs
+
+If the emulator is not brought up to speed I may consider re-creating a similar test harness in the future. I want to wait for the Pixel watch before I do anything though. They should also improve the codelab for WearOs watch faces, which is currently deprecated, after I sent them a mean Tweet about it's state.
+
 # Android Wear OS watch face with Test Harness
 
 An Android Wear OS template re-imagined with testing harness. The harness does what the emulator seems to lack
